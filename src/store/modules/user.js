@@ -2,7 +2,7 @@ const getDefaultState = () => {
   return {
     token: '',
     name: '',
-    avatar: '',
+    avatar: ''
   }
 }
 
@@ -27,7 +27,7 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
-  },
+  }
 }
 
 const actions = {
@@ -35,7 +35,7 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       resolve({ uid: 'uid', name: 'name', token: 'token' })
-      /*getInfo(state.uid)
+      /* getInfo(state.uid)
         .then((response) => {
           const { user_info } = response
           commit('SET_NAME', user_info.uid)
@@ -51,16 +51,16 @@ const actions = {
   // remove token
   resetToken({ commit }) {
     return new Promise((resolve) => {
-      //removeToken() // must remove  token  first
+      // removeToken() // must remove  token  first
       commit('RESET_STATE')
       resolve()
     })
-  },
+  }
 }
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions,
+  actions
 }

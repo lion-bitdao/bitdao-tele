@@ -4,5 +4,6 @@
   "htmlWhitespaceSensitivity": "ignore",
   "semi": false,
   "singleQuote": true,
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "'vue/html-self-closing": 0
 }

@@ -32,7 +32,11 @@ export const constantRoutes = [
     component: () => import('@/views/luckynumber/luckynumber'),
     hidden: true
   },
-
+  {
+    path: '/goodday',
+    component: () => import('@/views/goodday/goodday'),
+    hidden: true
+  },
   {
     path: '/404',
     component: () => import('@/views/404'),

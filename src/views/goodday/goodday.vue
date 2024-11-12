@@ -1,13 +1,13 @@
 <template>
   <div class="app-container">
     <div class="dialog">
-      <div class="dialog_head">Lucky Numbers</div>
+      <div class="dialog_head">Good Day</div>
       <div class="dialog_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
-          <div style="align: left; justify-self: left; margin-left: 15px" class="dialog_text">Number of digits</div>
+          <div style="align: left; justify-self: left; margin-left: 15px" class="dialog_text">Good Day</div>
           <div class="dialog_panel">
             <div class="dialog_panel_child" style="margin-left: 5px; margin-right: 15px">
-              <DialogSelect :data-source="rowsData" :column="5" :column-space="4" :button-width="55" />
+              <DialogSelect :data-source="rowsData" :selected-items="selectedItems" :column="3" :column-space="4" :button-width="100" :multi-select="true" @on-select="handleOnChoice" />
             </div>
           </div>
           <div class="dialog_panel">
@@ -35,12 +35,22 @@
 <script>
 import DialogSelect from '../../components/DialogSelect'
 export default {
-  name: 'LuckyNumber',
+  name: 'GoodDay',
   components: { DialogSelect },
   data() {
     return {
       listLoading: false,
-      rowsData: [],
+      rowsData: [
+        { id: 1, text: 'Marry' },
+        { id: 2, text: 'House warming' },
+        { id: 3, text: 'Business' },
+        { id: 4, text: '动土' },
+        { id: 5, text: 'Trade' },
+        { id: 6, text: 'Travel' },
+        { id: 7, text: '祭祀' },
+        { id: 8, text: '安葬' }
+      ],
+      selectedItems: [],
       total: 0,
       filter: {
         page: 0,
@@ -50,18 +60,11 @@ export default {
       }
     }
   },
-  created() {
-    this.initNums()
-  },
+  created() {},
   methods: {
-    initNums() {
-      this.rowsData = []
-      for (var i = 1; i <= 9; i++) {
-        this.rowsData.push({ id: i, text: `${i}` })
-      }
-    },
-    onNumClick(item) {
-      this.selectedNum = item.id
+    handleOnSelect(items) {
+      console.log(items)
+      this.selectedItems = items
     },
     jumpTo(_page, _query) {
       var _jumpArg = { path: _page }

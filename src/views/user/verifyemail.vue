@@ -2,7 +2,7 @@ d
 <template>
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">
-      <div class="dialog_white_head">邮箱验证</div>
+      <ReturnBar title="邮箱验证"></ReturnBar>
       <div class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel">
@@ -41,8 +41,10 @@ d
   </div>
 </template>
 <script>
+import ReturnBar from '../../components/ReturnBar'
 export default {
   name: 'EditUserProfile',
+  components: { ReturnBar },
   data() {
     return {
       listLoading: false,

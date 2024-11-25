@@ -1,10 +1,9 @@
-d
 <template>
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">
-      <div class="dialog_white_head">灵力记录</div>
+      <ReturnBar title="灵力记录"></ReturnBar>
       <div class="dialog_white_body">
-        <div style="align: center; justify-content: center; justify-items: center">
+        <div style="align: center; justify-content: center; justify-items: center; margin-left: 15px; margin-right: 15px">
           <div class="aurahis_head">
             <div class="aurahis_head_title">320</div>
             <div class="aurahis_head_subtitle">当前灵力</div>
@@ -106,8 +105,10 @@ d
 }
 </style>
 <script>
+import ReturnBar from '../../components/ReturnBar'
 export default {
-  name: 'LuckyNumber',
+  name: 'AuraHistory',
+  components: { ReturnBar },
   data() {
     return {
       listLoading: false,

@@ -2,7 +2,7 @@ d
 <template>
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">
-      <div class="dialog_white_head">用户信息</div>
+      <ReturnBar title="用户信息"></ReturnBar>
       <div class="dialog_white_body">
         <div style="align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel_ver">
@@ -111,9 +111,10 @@ d
 <script>
 import ModalDialog from '../../components/ModalDialog'
 import ModalToast from '../../components/ModalToast'
+import ReturnBar from '../../components/ReturnBar'
 export default {
   name: 'UserProfile',
-  components: { ModalDialog, ModalToast },
+  components: { ModalDialog, ModalToast, ReturnBar },
   data() {
     return {
       listLoading: false,

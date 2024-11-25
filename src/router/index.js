@@ -48,11 +48,6 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/person',
-    component: () => import('@/views/user/person'),
-    hidden: true
-  },
-  {
     path: '/edituserprofile',
     component: () => import('@/views/user/edituserprofile'),
     hidden: true

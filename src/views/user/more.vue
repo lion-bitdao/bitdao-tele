@@ -1,7 +1,7 @@
 <template>
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">
-      <div class="dialog_white_head">选项</div>
+      <ReturnBar title="选项"></ReturnBar>
       <div class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel" style="flex-direction: column">
@@ -36,8 +36,10 @@
   </div>
 </template>
 <script>
+import ReturnBar from '../../components/ReturnBar'
 export default {
   name: 'More',
+  components: { ReturnBar },
   data() {
     return {
       listLoading: false,

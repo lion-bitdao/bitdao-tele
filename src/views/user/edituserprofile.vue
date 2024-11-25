@@ -2,7 +2,7 @@ d
 <template>
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">
-      <div class="dialog_white_head">修改用户信息</div>
+      <ReturnBar title="修改用户信息"></ReturnBar>
       <div class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel">
@@ -60,9 +60,10 @@ d
 </template>
 <script>
 import DialogSelect from '../../components/DialogSelect'
+import ReturnBar from '../../components/ReturnBar'
 export default {
   name: 'EditUserProfile',
-  components: { DialogSelect },
+  components: { DialogSelect, ReturnBar },
   data() {
     return {
       listLoading: false,

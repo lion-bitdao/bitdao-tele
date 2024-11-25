@@ -28,6 +28,56 @@ Vue.use(Router)
  */
 export const constantRoutes = [
   {
+    path: '/verifyemail',
+    component: () => import('@/views/user/verifyemail'),
+    hidden: true
+  },
+  {
+    path: '/notification',
+    component: () => import('@/views/user/notification'),
+    hidden: true
+  },
+  {
+    path: '/fortunehistory',
+    component: () => import('@/views/user/fortunehistory'),
+    hidden: true
+  },
+  {
+    path: '/more',
+    component: () => import('@/views/user/more'),
+    hidden: true
+  },
+  {
+    path: '/person',
+    component: () => import('@/views/user/person'),
+    hidden: true
+  },
+  {
+    path: '/edituserprofile',
+    component: () => import('@/views/user/edituserprofile'),
+    hidden: true
+  },
+  {
+    path: '/userprofile',
+    component: () => import('@/views/user/userprofile'),
+    hidden: true
+  },
+  {
+    path: '/aurahistory',
+    component: () => import('@/views/user/aurahistory'),
+    hidden: true
+  },
+  {
+    path: '/profile',
+    component: () => import('@/views/user/profile'),
+    hidden: true
+  },
+  {
+    path: '/divination',
+    component: () => import('@/views/divination/divination'),
+    hidden: true
+  },
+  {
     path: '/luckynumber',
     component: () => import('@/views/luckynumber/luckynumber'),
     hidden: true

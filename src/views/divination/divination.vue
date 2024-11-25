@@ -1,30 +1,28 @@
 <template>
   <div class="app-container">
     <div class="dialog">
-      <div class="dialog_head">幸运数字</div>
+      <div class="dialog_head">⼘卦问事</div>
       <div class="dialog_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
-          <div style="align: left; justify-self: left; margin-left: 15px" class="dialog_text">数字位数</div>
+          <div style="text-align: center; justify-self: center; margin-left: 15px" class="dialog_text">请输入事项货选择快捷选项</div>
           <div class="dialog_panel">
-            <div class="dialog_panel_child" style="margin-left: 5px; margin-right: 15px">
-              <DialogSelect :data-source="rowsData" :column="5" :column-space="4" :button-width="55" />
+            <div class="dialog_panel_child">
+              <div style="flex: 1; text-align: justify" class="dialog_text">输入事项</div>
             </div>
           </div>
           <div class="dialog_panel">
             <div class="dialog_panel_child">
-              <div style="flex: 1; text-align: justify" class="dialog_text">最小数字</div>
-              <div style="margin-left: 15px; flex: 1; text-align: justify" class="dialog_text">最大数字</div>
+              <input style="text-align: justify; width: inherit" type="text" class="input_normal" placeholder="请输入事项" />
             </div>
           </div>
           <div class="dialog_panel">
             <div class="dialog_panel_child">
-              <input style="text-align: justify; width: inherit" type="number" class="input_normal" placeholder="请输入" />
-              <input style="margin-left: 15px; text-align: justify; width: inherit" type="number" class="input_normal" placeholder="请输入" />
+              <DialogSelect :data-source="rowsData" :selected-items="selectedItems" :column="3" :column-space="4" :button-width="96" :multi-select="true" @on-select="handleOnChoice" />
             </div>
           </div>
           <div class="dialog_panel">
             <div class="dialog_panel_child">
-              <input type="button" value="测算" class="btn_brown" style="width: 100%" />
+              <input type="button" value="起卦" class="btn_brown" style="width: 100%" />
             </div>
           </div>
         </div>
@@ -35,12 +33,17 @@
 <script>
 import DialogSelect from '../../components/DialogSelect'
 export default {
-  name: 'LuckyNumber',
+  name: 'GoodDay',
   components: { DialogSelect },
   data() {
     return {
       listLoading: false,
-      rowsData: [],
+      rowsData: [
+        { id: 1, text: '寻物' },
+        { id: 2, text: '姻缘' },
+        { id: 3, text: '合作' }
+      ],
+      selectedItems: [],
       total: 0,
       filter: {
         page: 0,
@@ -50,18 +53,10 @@ export default {
       }
     }
   },
-  created() {
-    this.initNums()
-  },
+  created() {},
   methods: {
-    initNums() {
-      this.rowsData = []
-      for (var i = 1; i <= 9; i++) {
-        this.rowsData.push({ id: i, text: `${i}` })
-      }
-    },
-    onNumClick(item) {
-      this.selectedNum = item.id
+    handleOnSelect(items) {
+      this.selectedItems = items
     },
     jumpTo(_page, _query) {
       var _jumpArg = { path: _page }

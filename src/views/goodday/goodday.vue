@@ -1,30 +1,31 @@
 <template>
   <div class="app-container">
     <div class="dialog">
-      <div class="dialog_head">Good Day</div>
+      <div class="dialog_head">吉⽇推算</div>
       <div class="dialog_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
-          <div style="align: left; justify-self: left; margin-left: 15px" class="dialog_text">Good Day</div>
+          <div style="align: left; justify-self: left; margin-left: 15px" class="dialog_text">事项</div>
           <div class="dialog_panel">
             <div class="dialog_panel_child" style="margin-left: 5px; margin-right: 15px">
               <DialogSelect :data-source="rowsData" :selected-items="selectedItems" :column="3" :column-space="4" :button-width="100" :multi-select="true" @on-select="handleOnChoice" />
             </div>
           </div>
           <div class="dialog_panel">
-            <div class="dialog_panel_child" style="margin-left: 15px; margin-right: 15px">
-              <div style="flex: 1; text-align: justify" class="dialog_text">Min</div>
-              <div style="margin-left: 15px; flex: 1; text-align: justify" class="dialog_text">Max</div>
+            <div class="dialog_panel_child">
+              <div style="flex: 1; text-align: justify" class="dialog_text">开始日期</div>
             </div>
           </div>
           <div class="dialog_panel">
-            <div class="dialog_panel_child" style="margin-left: 15px; margin-right: 15px">
-              <input style="text-align: justify; width: inherit" type="number" class="input_normal" />
-              <input style="margin-left: 15px; text-align: justify; width: inherit" type="number" class="input_normal" />
+            <div class="dialog_panel_child">
+              <input style="text-align: center; width: inherit" type="number" class="input_normal" placeholder="选择开始日期" />
             </div>
           </div>
           <div class="dialog_panel">
-            <div class="dialog_panel_child" style="margin-left: 15px; margin-right: 15px">
-              <input type="button" value="Start Calculation" class="btn_brown" style="width: 100%" />
+            <div class="dialog_panel_child">会给出开始⽇期3个⽉内的吉⽇</div>
+          </div>
+          <div class="dialog_panel">
+            <div class="dialog_panel_child">
+              <input type="button" value="推算" class="btn_brown" style="width: 100%" />
             </div>
           </div>
         </div>
@@ -41,12 +42,12 @@ export default {
     return {
       listLoading: false,
       rowsData: [
-        { id: 1, text: 'Marry' },
-        { id: 2, text: 'House warming' },
-        { id: 3, text: 'Business' },
+        { id: 1, text: '结婚' },
+        { id: 2, text: '搬家' },
+        { id: 3, text: '开业' },
         { id: 4, text: '动土' },
-        { id: 5, text: 'Trade' },
-        { id: 6, text: 'Travel' },
+        { id: 5, text: '交易' },
+        { id: 6, text: '旅行' },
         { id: 7, text: '祭祀' },
         { id: 8, text: '安葬' }
       ],
@@ -63,7 +64,6 @@ export default {
   created() {},
   methods: {
     handleOnSelect(items) {
-      console.log(items)
       this.selectedItems = items
     },
     jumpTo(_page, _query) {

@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="onModalToastTime"></ModalToast>
+    <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="modalToastShow = false"></ModalToast>
   </div>
 </template>
 <script>
@@ -71,36 +71,32 @@ export default {
   },
   created() {},
   methods: {
-    onModalToastTime(e) {
-      this.modalToastShow = false
+    showToast(_content) {
+      this.toastContent = _content
+      this.modalToastShow = true
     },
     onBindEmail2Click(item) {
       bindEmail2(this.code)
         .then((ret) => {
-          this.toastContent = '邮箱设置成功'
-          this.modalToastShow = true
+          this.showToast('邮箱设置成功')
           this.emailSended = true
         })
         .catch((e) => {
-          this.toastContent = '邮箱设置失败'
-          this.modalToastShow = true
+          this.showToast('邮箱设置失败')
         })
     },
     onBindEmail1Click(item) {
       if (!validateEmail(this.email)) {
-        this.toastContent = '未输入邮箱或者邮箱格式错误'
-        this.modalToastShow = true
+        this.showToast('未输入邮箱或者邮箱格式错误')
         return
       }
       bindEmail1(this.email)
         .then((ret) => {
-          this.toastContent = '验证码发送成功'
-          this.modalToastShow = true
+          this.showToast('验证码发送成功')
           this.emailSended = true
         })
         .catch((e) => {
-          this.toastContent = '验证码发送失败'
-          this.modalToastShow = true
+          this.showToast('验证码发送失败')
         })
     },
     jumpTo(_page, _query) {

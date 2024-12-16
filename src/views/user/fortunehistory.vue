@@ -108,12 +108,14 @@
 </style>
 <script>
 import ReturnBar from '../../components/ReturnBar'
+import { getFortuneHistory } from '../../api/fortune'
 export default {
   name: 'FortuneHistory',
   components: { ReturnBar },
   data() {
     return {
       listLoading: false,
+      list: [],
       nums: [1, 2, 3, 4, 5],
       total: 0,
       filter: {
@@ -125,14 +127,18 @@ export default {
     }
   },
   created() {
-    this.initNums()
+    this.init()
   },
   methods: {
-    initNums() {
-      this.rowsData = []
-      for (var i = 1; i <= 9; i++) {
-        this.rowsData.push({ id: i, text: `${i}` })
-      }
+    init() {
+      getFortuneHistory(this.filter.page, this.filter.size)
+        .then((result) => {
+          this.list = result.list
+          this.total = result.total
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     onNumClick(item) {
       this.selectedNum = item.id

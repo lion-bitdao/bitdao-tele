@@ -6,6 +6,9 @@ import App from './App'
 import store from './store'
 import router from './router'
 import './assets/global.css'
+import moment from 'moment'
+
+Vue.prototype.$moment = moment
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

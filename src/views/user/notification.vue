@@ -7,15 +7,15 @@
           <div class="dialog_white_panel" style="flex-direction: column">
             <div class="menu_panel">
               <div class="menu_bar">
-                <div class="menu_bar_pointer"><el-switch v-model="changeValue1" active-color="#bda06f" inactive-color="#b0b0b0"></el-switch></div>
+                <div class="menu_bar_pointer"><el-switch v-model="changeValue0" active-color="#bda06f" inactive-color="#b0b0b0" @click="onClickOption(0)"></el-switch></div>
                 <div class="menu_bar_text">今日运势</div>
               </div>
               <div class="menu_bar">
-                <div class="menu_bar_pointer"><el-switch v-model="changeValue2" active-color="#bda06f" inactive-color="#b0b0b0"></el-switch></div>
+                <div class="menu_bar_pointer"><el-switch v-model="changeValue1" active-color="#bda06f" inactive-color="#b0b0b0" @click="onClickOption(1)"></el-switch></div>
                 <div class="menu_bar_text">明日运势</div>
               </div>
               <div class="menu_bar">
-                <div class="menu_bar_pointer"><el-switch v-model="changeValue3" active-color="#bda06f" inactive-color="#b0b0b0"></el-switch></div>
+                <div class="menu_bar_pointer"><el-switch v-model="changeValue2" active-color="#bda06f" inactive-color="#b0b0b0" @click="onClickOption(2)"></el-switch></div>
                 <div class="menu_bar_text">事件推送</div>
               </div>
             </div>
@@ -27,6 +27,7 @@
 </template>
 <script>
 import ReturnBar from '../../components/ReturnBar'
+import { getOptionState, optionChange } from '../../api/options'
 export default {
   name: 'Notification',
   components: { ReturnBar },
@@ -40,15 +41,33 @@ export default {
         status: 0,
         filter: ''
       },
+      changeValue0: false,
       changeValue1: false,
-      changeValue2: false,
-      changeValue3: false,
-      changeValue4: false
+      changeValue2: false
     }
   },
-  created() {},
+  created() {
+    this.init()
+  },
   methods: {
-    onNumClick(item) {},
+    init() {
+      getOptionState()
+        .then((result) => {
+          this.changeValue0 = result[0] === '1'
+          this.changeValue1 = result[1] === '1'
+          this.changeValue2 = result[2] === '1'
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    onClickOption(e) {
+      optionChange(e)
+        .then((result) => {})
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     jumpTo(_page, _query) {
       var _jumpArg = { path: _page }
       if (_query !== undefined) {

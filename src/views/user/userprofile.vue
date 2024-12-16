@@ -10,7 +10,7 @@
               <div class="userprofile_item_name">
                 <div>{{ item.nickname }}</div>
                 <div class="userprofile_item_text">
-                  <div>性别:{{ getGender(item.gender === '1') }}</div>
+                  <div>性别:{{ getGender(item.gender) }}</div>
                   <div>生日:{{ item.bazi_y }}年 {{ item.bazi_m }} {{ item.bazi_d }} {{ item.bazi_h }}</div>
                   <div>{{ item.lunar_time }}</div>
                   <div>关系:{{ getRelation(item.type) }}</div>
@@ -25,8 +25,13 @@
           </div>
         </div>
       </div>
+      <div class="dialog_white_panel">
+        <div class="dialog_panel_child">
+          <input type="button" value="新增用户" class="btn_brown" style="width: 100%" @click="jumpTo('/edituserprofile', undefined)" />
+        </div>
+      </div>
       <ModalDialog v-if="modalDlgShow" :content="modalDlgText" :submitenabled="true" @on-canceled="onModalDlgCanceled" @on-submitted="onModalDlgSubmitted"></ModalDialog>
-      <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="onModalToastTime"></ModalToast>
+      <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="modalToastShow = false"></ModalToast>
     </div>
   </div>
 </template>
@@ -85,9 +90,6 @@ export default {
       this.deleteId = e
       this.modalDlgText = `确认要移除${_info.nickname}吗?`
       this.modalDlgShow = true
-    },
-    onModalToastTime(e) {
-      this.modalToastShow = false
     },
     onModalDlgSubmitted(e) {
       personRemove(this.deleteId)

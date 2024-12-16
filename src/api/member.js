@@ -24,6 +24,18 @@ export function getPersonList() {
   })
 }
 
+export function getPersonInfo(_id) {
+  return request({
+    url: '/i',
+    method: 'post',
+    dataType: 'json',
+    data: {
+      method: 'personinfo',
+      params: [_id]
+    }
+  })
+}
+
 export function personCreate(_type, _nickName, _gender, _date, _time) {
   return request({
     url: '/i',

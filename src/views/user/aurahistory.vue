@@ -23,6 +23,53 @@
     </div>
   </div>
 </template>
+
+<script>
+import ReturnBar from '../../components/ReturnBar'
+import { getAuraHistory } from '../../api/aura'
+export default {
+  name: 'AuraHistory',
+  components: { ReturnBar },
+  data() {
+    return {
+      listLoading: false,
+      list: [],
+      total: 0,
+      filter: {
+        page: 0,
+        size: 20,
+        status: 0,
+        filter: ''
+      }
+    }
+  },
+  created() {
+    this.init()
+  },
+  methods: {
+    init() {
+      getAuraHistory(this.filter.page, this.filter.size)
+        .then((result) => {
+          this.list = result.list
+          this.total = result.total
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    jumpTo(_page, _query) {
+      var _jumpArg = { path: _page }
+      if (_query !== undefined) {
+        _jumpArg.query = _query
+      }
+      this.$router.push(_jumpArg)
+    },
+    goBack() {
+      this.$router.go(-1)
+    }
+  }
+}
+</script>
 <style>
 .aurahis_head {
   background: #bda06f;
@@ -98,47 +145,3 @@
   flex-direction: column;
 }
 </style>
-<script>
-import ReturnBar from '../../components/ReturnBar'
-export default {
-  name: 'AuraHistory',
-  components: { ReturnBar },
-  data() {
-    return {
-      listLoading: false,
-      rowsData: [],
-      total: 0,
-      filter: {
-        page: 0,
-        size: 20,
-        status: 0,
-        filter: ''
-      }
-    }
-  },
-  created() {
-    this.initNums()
-  },
-  methods: {
-    initNums() {
-      this.rowsData = []
-      for (var i = 1; i <= 9; i++) {
-        this.rowsData.push({ id: i, text: `${i}` })
-      }
-    },
-    onNumClick(item) {
-      this.selectedNum = item.id
-    },
-    jumpTo(_page, _query) {
-      var _jumpArg = { path: _page }
-      if (_query !== undefined) {
-        _jumpArg.query = _query
-      }
-      this.$router.push(_jumpArg)
-    },
-    goBack() {
-      this.$router.go(-1)
-    }
-  }
-}
-</script>

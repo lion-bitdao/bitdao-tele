@@ -28,6 +28,16 @@ Vue.use(Router)
  */
 export const constantRoutes = [
   {
+    path: '/test',
+    component: () => import('@/views/user/test'),
+    hidden: true
+  },
+  {
+    path: '/dailyforcast',
+    component: () => import('@/views/user/dailyforcast'),
+    hidden: true
+  },
+  {
     path: '/verifyemail',
     component: () => import('@/views/user/verifyemail'),
     hidden: true

@@ -1,4 +1,3 @@
-d
 <template>
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">

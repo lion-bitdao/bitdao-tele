@@ -97,12 +97,6 @@
   display: flex;
   flex-direction: column;
 }
-
-.type_button_icon {
-  margin-top: 12px;
-  width: 48px;
-  height: 48px;
-}
 </style>
 <script>
 import ReturnBar from '../../components/ReturnBar'

@@ -1,4 +1,3 @@
-d
 <template>
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">
@@ -61,24 +60,15 @@ d
 <script>
 import DialogSelect from '../../components/DialogSelect'
 import ReturnBar from '../../components/ReturnBar'
+import { getRelations, getGenders } from '../../utils/enums'
 export default {
   name: 'EditUserProfile',
   components: { DialogSelect, ReturnBar },
   data() {
     return {
       listLoading: false,
-      rowsData: [
-        { id: 1, text: '男' },
-        { id: 2, text: '女' }
-      ],
-      relations: [
-        { id: 1, text: '父母' },
-        { id: 2, text: '子女' },
-        { id: 3, text: '配偶' },
-        { id: 4, text: '朋友' },
-        { id: 5, text: '搭档' },
-        { id: 6, text: '对手' }
-      ],
+      rowsData: getGenders(),
+      relations: getRelations(),
       total: 0,
       filter: {
         page: 0,
@@ -87,7 +77,8 @@ export default {
         filter: ''
       },
       value1: '',
-      value2: ''
+      value2: '',
+      token: this.$route.query.t
     }
   },
   created() {},

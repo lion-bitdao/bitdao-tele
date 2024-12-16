@@ -1,4 +1,3 @@
-d
 <template>
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">
@@ -12,39 +11,43 @@ d
           </div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <input style="text-align: left; width: inherit" type="text" class="input_normal" placeholder="请输入邮箱" />
+              <input v-model="email" style="text-align: left; width: inherit" type="text" class="input_normal" placeholder="请输入邮箱" />
             </div>
           </div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <div style="align: left; justify-self: left" class="btn_link">发送验证码到邮箱</div>
+              <div style="align: left; justify-self: left" class="btn_link" @click="onBindEmail1Click">发送验证码到邮箱</div>
             </div>
           </div>
-          <div class="dialog_white_panel" style="margin-top: 40px">
+          <div v-if="emailSended" class="dialog_white_panel" style="margin-top: 40px">
             <div class="dialog_white_panel_child">
               <div style="align: left; justify-self: left" class="dialog_text">邮件内的验证码</div>
             </div>
           </div>
-          <div class="dialog_white_panel">
+          <div v-if="emailSended" class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <input style="text-align: left; width: inherit" type="text" class="input_normal" placeholder="请输入验证码" />
+              <input v-model="code" style="text-align: left; width: inherit" type="text" class="input_normal" placeholder="请输入验证码" />
             </div>
           </div>
-          <div class="dialog_white_panel">
+          <div v-if="emailSended" class="dialog_white_panel">
             <div class="dialog_panel_child">
-              <input type="button" value="保存" class="btn_brown" style="width: 100%" />
+              <input type="button" value="保存" class="btn_brown" style="width: 100%" @click="onBindEmail2Click" />
             </div>
           </div>
         </div>
       </div>
     </div>
+    <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="onModalToastTime"></ModalToast>
   </div>
 </template>
 <script>
 import ReturnBar from '../../components/ReturnBar'
+import { bindEmail1, bindEmail2 } from '../../api/member'
+import { validateEmail } from '../../utils/validate'
+import ModalToast from '../../components/ModalToast'
 export default {
   name: 'EditUserProfile',
-  components: { ReturnBar },
+  components: { ReturnBar, ModalToast },
   data() {
     return {
       listLoading: false,
@@ -59,14 +62,46 @@ export default {
         status: 0,
         filter: ''
       },
-      value1: '',
-      value2: ''
+      email: '',
+      code: '',
+      emailSended: false,
+      modalToastShow: false,
+      toastContent: ''
     }
   },
   created() {},
   methods: {
-    onNumClick(item) {
-      this.selectedNum = item.id
+    onModalToastTime(e) {
+      this.modalToastShow = false
+    },
+    onBindEmail2Click(item) {
+      bindEmail2(this.code)
+        .then((ret) => {
+          this.toastContent = '邮箱设置成功'
+          this.modalToastShow = true
+          this.emailSended = true
+        })
+        .catch((e) => {
+          this.toastContent = '邮箱设置失败'
+          this.modalToastShow = true
+        })
+    },
+    onBindEmail1Click(item) {
+      if (!validateEmail(this.email)) {
+        this.toastContent = '未输入邮箱或者邮箱格式错误'
+        this.modalToastShow = true
+        return
+      }
+      bindEmail1(this.email)
+        .then((ret) => {
+          this.toastContent = '验证码发送成功'
+          this.modalToastShow = true
+          this.emailSended = true
+        })
+        .catch((e) => {
+          this.toastContent = '验证码发送失败'
+          this.modalToastShow = true
+        })
     },
     jumpTo(_page, _query) {
       var _jumpArg = { path: _page }

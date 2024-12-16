@@ -1,4 +1,3 @@
-d
 <template>
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">
@@ -6,35 +5,20 @@ d
       <div class="dialog_white_body">
         <div style="align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel_ver">
-            <div class="userprofile_item">
+            <div v-for="item in list" :key="item" class="userprofile_item">
               <div class="userprofile_item_icon"></div>
               <div class="userprofile_item_name">
-                <div>用户a</div>
+                <div>{{ item.nickname }}</div>
                 <div class="userprofile_item_text">
-                  <div>性别:男</div>
-                  <div>生日:已末年 五⽉初七 ⽺ 甲寅時</div>
-                  <div>1979年6⽉1⽇</div>
-                  <div>关系:本人</div>
+                  <div>性别:{{ getGender(item.gender === '1') }}</div>
+                  <div>生日:{{ item.bazi_y }}年 {{ item.bazi_m }} {{ item.bazi_d }} {{ item.bazi_h }}</div>
+                  <div>{{ item.lunar_time }}</div>
+                  <div>关系:{{ getRelation(item.type) }}</div>
                 </div>
                 <div class="userprofile_hrefs">
-                  <div class="userprofile_item_href" @click="onClickEdit">修改</div>
-                </div>
-              </div>
-            </div>
-            <div class="userprofile_item">
-              <div class="userprofile_item_icon"></div>
-              <div class="userprofile_item_name">
-                <div>用户b</div>
-                <div class="userprofile_item_text">
-                  <div>性别:女</div>
-                  <div>生日:已末年 五⽉初七 ⽺ 甲寅時</div>
-                  <div>1979年6⽉1⽇</div>
-                  <div>关系:配偶</div>
-                </div>
-                <div class="userprofile_hrefs">
-                  <div class="userprofile_item_href" @click="onClickEdit">修改</div>
-                  <div class="userprofile_item_href" style="margin-left: 10px">|</div>
-                  <div class="userprofile_item_href" style="margin-left: 10px" @click="onClickDelete">删除</div>
+                  <div class="userprofile_item_href" @click="onClickEdit(item.id)">修改</div>
+                  <div v-if="item.type !== 'self'" class="userprofile_item_href" style="margin-left: 10px">|</div>
+                  <div v-if="item.type !== 'self'" class="userprofile_item_href" style="margin-left: 10px" @click="onClickDelete(item.id)">删除</div>
                 </div>
               </div>
             </div>
@@ -42,10 +26,98 @@ d
         </div>
       </div>
       <ModalDialog v-if="modalDlgShow" :content="modalDlgText" :submitenabled="true" @on-canceled="onModalDlgCanceled" @on-submitted="onModalDlgSubmitted"></ModalDialog>
-      <ModalToast v-if="modalToastShow" content="删除成功" @on-time="onModalToastTime"></ModalToast>
+      <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="onModalToastTime"></ModalToast>
     </div>
   </div>
 </template>
+<script>
+import ModalDialog from '../../components/ModalDialog'
+import ModalToast from '../../components/ModalToast'
+import ReturnBar from '../../components/ReturnBar'
+import { getRelation, getGender } from '../../utils/enums'
+import { getPersonList, personRemove } from '../../api/member'
+export default {
+  name: 'UserProfile',
+  components: { ModalDialog, ModalToast, ReturnBar },
+  data() {
+    return {
+      listLoading: false,
+      list: [],
+      total: 0,
+      filter: {
+        page: 0,
+        size: 20,
+        status: 0,
+        filter: ''
+      },
+      modalDlgShow: false,
+      modalDlgText: '',
+      modalToastShow: false,
+      deleteId: 0,
+      toastContent: '删除成功',
+      token: this.$route.query.t,
+      tid: this.$route.query.tid
+    }
+  },
+  created() {
+    this.init()
+  },
+  methods: {
+    getGender,
+    getRelation,
+    init() {
+      getPersonList()
+        .then((result) => {
+          this.list = result.result.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    onClickEdit(e) {
+      this.jumpTo('/edituserprofile', { id: e })
+    },
+    onClickDelete(e) {
+      var _info = this.list.find((t) => t.id === e)
+      if (_info === undefined || _info === null) {
+        return
+      }
+      this.deleteId = e
+      this.modalDlgText = `确认要移除${_info.nickname}吗?`
+      this.modalDlgShow = true
+    },
+    onModalToastTime(e) {
+      this.modalToastShow = false
+    },
+    onModalDlgSubmitted(e) {
+      personRemove(this.deleteId)
+        .then((result) => {
+          this.modalDlgShow = false
+          this.init()
+          this.toastContent = '移除成功'
+          this.modalToastShow = true
+        })
+        .catch((err) => {
+          console.log(err)
+          this.toastContent = '移除失败!'
+        })
+    },
+    onModalDlgCanceled(e) {
+      this.modalDlgShow = false
+    },
+    jumpTo(_page, _query) {
+      var _jumpArg = { path: _page }
+      if (_query !== undefined) {
+        _jumpArg.query = _query
+      }
+      this.$router.push(_jumpArg)
+    },
+    goBack() {
+      this.$router.go(-1)
+    }
+  }
+}
+</script>
 <style>
 .userprofile_hrefs {
   display: flex;
@@ -108,58 +180,3 @@ d
   cursor: pointer;
 }
 </style>
-<script>
-import ModalDialog from '../../components/ModalDialog'
-import ModalToast from '../../components/ModalToast'
-import ReturnBar from '../../components/ReturnBar'
-export default {
-  name: 'UserProfile',
-  components: { ModalDialog, ModalToast, ReturnBar },
-  data() {
-    return {
-      listLoading: false,
-      rowsData: [],
-      total: 0,
-      filter: {
-        page: 0,
-        size: 20,
-        status: 0,
-        filter: ''
-      },
-      modalDlgShow: false,
-      modalDlgText: '',
-      modalToastShow: false
-    }
-  },
-  created() {},
-  methods: {
-    onClickEdit(e) {
-      this.jumpTo('/edituserprofile', undefined)
-    },
-    onClickDelete(e) {
-      this.modalDlgText = '确认要删除xxx吗?'
-      this.modalDlgShow = true
-    },
-    onModalToastTime(e) {
-      this.modalToastShow = false
-    },
-    onModalDlgSubmitted(e) {
-      this.modalDlgShow = false
-      this.modalToastShow = true
-    },
-    onModalDlgCanceled(e) {
-      this.modalDlgShow = false
-    },
-    jumpTo(_page, _query) {
-      var _jumpArg = { path: _page }
-      if (_query !== undefined) {
-        _jumpArg.query = _query
-      }
-      this.$router.push(_jumpArg)
-    },
-    goBack() {
-      this.$router.go(-1)
-    }
-  }
-}
-</script>

@@ -1,13 +1,13 @@
 import request from '@/utils/request'
 
-export function getLuckyNumber(_tid, _numCount, _min, _max) {
+export function getDivination(_tid, _dvType) {
   return request({
     url: '/i',
     method: 'post',
     dataType: 'json',
     data: {
       method: 'divination',
-      params: [_tid, _numCount, _min, _max]
+      params: [_tid, _dvType]
     }
   })
 }

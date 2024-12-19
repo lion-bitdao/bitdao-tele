@@ -2,7 +2,8 @@
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">
       <div class="dialog_white_head"></div>
-      <div class="dialog_white_body">
+      <div v-if="!loaded" class="dialog_white_body">登录已过期,请从telegram菜单重新进入此页面!</div>
+      <div v-if="loaded" class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div class="avatar_panel">
             <div class="avatar"></div>
@@ -60,7 +61,8 @@ export default {
       nickName: '',
       point: 0,
       token: this.$route.query.t,
-      tid: this.$route.query.tid
+      tid: this.$route.query.tid,
+      loaded: true
     }
   },
   created() {
@@ -68,15 +70,19 @@ export default {
   },
   methods: {
     init() {
-      setToken(this.token)
-      setUid(this.tid)
+      setToken(this.$route.query.t)
+      setUid(this.$route.query.tid)
       getMemberInfo()
         .then((result) => {
-          this.nickName = result.nickname.trim() === '' ? '匿名' : this.result.nickname
-          this.point = result.point
+          console.log(result)
+          const _value = result.result
+          this.nickName = _value.nickname.trim() === '' ? '匿名' : _value.nickname
+          this.point = parseInt(_value.point)
+          this.loaded = true
         })
-        .catch((err) => {
-          console.log(err)
+        .catch((e) => {
+          console.log(e)
+          this.loaded = false
         })
     },
     onNumClick(item) {

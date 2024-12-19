@@ -22,14 +22,15 @@
                 </div>
               </div>
             </div>
+            <div class="dialog_white_panel">
+              <div class="dialog_panel_child">
+                <input type="button" value="新增用户" class="btn_brown" style="width: 100%" @click="jumpTo('/edituserprofile', undefined)" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="dialog_white_panel">
-        <div class="dialog_panel_child">
-          <input type="button" value="新增用户" class="btn_brown" style="width: 100%" @click="jumpTo('/edituserprofile', undefined)" />
-        </div>
-      </div>
+
       <ModalDialog v-if="modalDlgShow" :content="modalDlgText" :submitenabled="true" @on-canceled="onModalDlgCanceled" @on-submitted="onModalDlgSubmitted"></ModalDialog>
       <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="modalToastShow = false"></ModalToast>
     </div>
@@ -73,7 +74,7 @@ export default {
     init() {
       getPersonList()
         .then((result) => {
-          this.list = result.result.data
+          this.list = result.result
         })
         .catch((err) => {
           console.log(err)

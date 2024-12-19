@@ -1,7 +1,7 @@
 <template>
   <div class="app-container" style="height: 100vh">
     <div class="dialog_white">
-      <ReturnBar :title="修改用户信息"></ReturnBar>
+      <ReturnBar :title="pageTitle"></ReturnBar>
       <div class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel">
@@ -21,7 +21,7 @@
           </div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <DialogSelect :data-source="rowsData" :column="2" :column-space="4" :button-width="150" :selected-items="genderSeleted" @on-select="selectingGender" />
+              <DialogSelect :key="reloadData" :data-source="rowsData" :column="2" :column-space="4" :button-width="150" :selected-items="genderSeleted" @on-select="selectingGender" />
             </div>
           </div>
           <div class="dialog_white_panel">
@@ -35,17 +35,29 @@
         </div>
         <div class="dialog_white_panel">
           <div class="dialog_white_panel_child">
-            <el-time-select v-model="birthTime" class="input_normal" format="HH时mm分" style="text-align: center; margin-left: 15px; margin-right: 15px; width: inherit" placeholder="生辰时分"></el-time-select>
+            <el-time-select
+              v-model="birthTime"
+              :picker-options="{
+                start: '00:00',
+                step: '00:15',
+                end: '23:45',
+                minTime: startTime
+              }"
+              class="input_normal"
+              format="HH时mm分"
+              style="text-align: center; margin-left: 15px; margin-right: 15px; width: inherit"
+              placeholder="生辰时分"
+            ></el-time-select>
           </div>
         </div>
-        <div class="dialog_white_panel">
+        <div v-if="id === undefined || id === null" class="dialog_white_panel">
           <div class="dialog_white_panel_child">
             <div style="align: left; justify-self: left; margin-left: 10px; margin-right: 35px" class="dialog_text">与本人的关系</div>
           </div>
         </div>
-        <div class="dialog_white_panel">
+        <div v-if="id === undefined || id === null" class="dialog_white_panel">
           <div class="dialog_white_panel_child" style="margin-left: 25px">
-            <DialogSelect :data-source="relations" :column="3" :column-space="4" :button-width="98" :selected-items="relationSeleted" @on-select="selectingRelation" />
+            <DialogSelect :key="reloadData" :data-source="relations" :column="3" :column-space="4" :button-width="98" :selected-items="relationSeleted" @on-select="selectingRelation" />
           </div>
         </div>
         <div class="dialog_white_panel">
@@ -64,7 +76,7 @@ import ReturnBar from '../../components/ReturnBar'
 import ModalToast from '../../components/ModalToast'
 
 import { getRelations, getGenders } from '../../utils/enums'
-import { personCreate, personModify, getPersonInfo } from '../../api/member'
+import { personCreate, personModify, getPersonInfo, getPersonList } from '../../api/member'
 import moment from 'moment'
 export default {
   name: 'EditUserProfile',
@@ -73,8 +85,9 @@ export default {
     return {
       listLoading: false,
       rowsData: getGenders(),
-      relations: getRelations(),
+      relations: [],
       total: 0,
+      list: [],
       filter: {
         page: 0,
         size: 20,
@@ -93,7 +106,8 @@ export default {
       relationItems: [],
       genderItems: [],
       modalToastShow: false,
-      toastContent: ''
+      toastContent: '',
+      reloadData: new Date()
     }
   },
   created() {
@@ -117,7 +131,8 @@ export default {
         this.showToast('必须选择与本人的关系')
         return
       }
-      if (this.birthDate.trim() === '') {
+      var _birthDate = moment(this.birthDate).format('YYYY-MM-DD')
+      if (_birthDate.trim() === '') {
         this.showToast('生辰年月日不能为空')
         return
       }
@@ -126,7 +141,7 @@ export default {
         return
       }
       if (this.id === undefined) {
-        personCreate(this.relationItems[0], this.nickName, this.genderItems[0], this.birthDate, this.birthTime)
+        personCreate(this.relationItems[0], this.nickName, this.genderItems[0], _birthDate, this.birthTime)
           .then((ret) => {
             this.goBack()
           })
@@ -135,7 +150,7 @@ export default {
             this.showToast('保存失败')
           })
       } else {
-        personModify(this.id, this.relationItems[0], this.nickName, this.genderItems[0], this.birthDate, this.birthTime)
+        personModify(this.id, this.nickName, this.genderItems[0], _birthDate, this.birthTime)
           .then((ret) => {
             this.goBack()
           })
@@ -146,25 +161,47 @@ export default {
       }
     },
     selectingRelation(e) {
-      this.relations = e
+      this.relationItems = e
     },
     selectingGender(e) {
       this.genderItems = e
     },
 
     init() {
-      if (this.id === undefined || this.id === null) {
+      getPersonList()
+        .then((result) => {
+          this.list = result.result
+          var _finded = this.list.find((t) => t.type === 'self')
+          var _filterSelf = _finded !== undefined && _finded !== null
+          var _relations = getRelations()
+          if (_filterSelf) {
+            _relations.splice(0, 1)
+          }
+          this.relations = _relations
+          this.reloadData = new Date()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      if (this.$route.query.id === undefined || this.$route.query.id === null) {
         this.pageTitle = '创建新用户'
         return
       }
       getPersonInfo(this.id)
         .then((result) => {
-          this.genderSeleted = [result.gender]
-          this.relationSeleted = [result.type]
-          var _birthDay = moment(result.solar_time)
-          this.birthDate = _birthDay.format('yyyy-MM-dd')
+          const _value = result.result
+          this.genderSeleted = [_value.gender]
+          this.genderItems = this.genderSeleted
+          this.relationSeleted = [_value.type]
+          this.relationItems = this.relationSeleted
+          var _birthDay = moment(_value.solar_time)
+          this.birthDate = _birthDay
           this.birthTime = _birthDay.format('HH:mm')
-          this.nickName = result.nickName
+          this.nickName = _value.nickname
+          if (_value.type === 'self') {
+            this.relations = getRelations()
+          }
+          this.reloadData = new Date()
         })
         .catch((err) => {
           console.log(err)

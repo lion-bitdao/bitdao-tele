@@ -5,17 +5,17 @@
       <div class="dialog_white_body">
         <div style="align: center; justify-content: center; justify-items: center; margin-left: 15px; margin-right: 15px">
           <div class="aurahis_head">
-            <div class="aurahis_head_title">320</div>
+            <div class="aurahis_head_title">{{ aura | round }}</div>
             <div class="aurahis_head_subtitle">当前灵力</div>
             <div class="aurahis_head_subtitle" style="margin-bottom: 10px"><div class="btn_link" style="color: #ffffff">关于灵力</div></div>
           </div>
-          <div class="dialog_white_panel">
-            <div class="aurahis_item">
+          <div class="dialog_white_panel" style="flex-direction: column">
+            <div v-for="item in list" :key="item.id" class="aurahis_item">
               <div class="aurahis_item_name">
-                <div>每日登录</div>
-                <div class="aurahis_item_date">2024-7-1</div>
+                <div>{{ item.type }}</div>
+                <div class="aurahis_item_date">{{ item.date | formatdate }}</div>
               </div>
-              <div class="aurahis_item_num">+20</div>
+              <div class="aurahis_item_num">{{ item.point | round }}</div>
             </div>
           </div>
         </div>
@@ -40,7 +40,8 @@ export default {
         size: 20,
         status: 0,
         filter: ''
-      }
+      },
+      aura: 0
     }
   },
   created() {
@@ -50,8 +51,10 @@ export default {
     init() {
       getAuraHistory(this.filter.page, this.filter.size)
         .then((result) => {
-          this.list = result.list
-          this.total = result.total
+          var _value = result.result
+          this.list = _value.list
+          this.total = _value.total
+          this.aura = _value.point
         })
         .catch((err) => {
           console.log(err)
@@ -105,6 +108,7 @@ export default {
   flex-direction: row;
   width: 90%;
   margin-left: 5%;
+  margin-top: 10px;
 }
 
 .aurahis_item_name {

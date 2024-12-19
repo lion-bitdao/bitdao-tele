@@ -7,15 +7,15 @@
           <div class="dialog_white_panel" style="flex-direction: column">
             <div class="menu_panel">
               <div class="menu_bar">
-                <div class="menu_bar_pointer"><el-switch v-model="changeValue0" active-color="#bda06f" inactive-color="#b0b0b0" @click="onClickOption(0)"></el-switch></div>
+                <div class="menu_bar_pointer"><el-switch v-model="changeValue0" active-color="#bda06f" inactive-color="#b0b0b0" @change="onClickOption('option_today_fortune')"></el-switch></div>
                 <div class="menu_bar_text">今日运势</div>
               </div>
               <div class="menu_bar">
-                <div class="menu_bar_pointer"><el-switch v-model="changeValue1" active-color="#bda06f" inactive-color="#b0b0b0" @click="onClickOption(1)"></el-switch></div>
+                <div class="menu_bar_pointer"><el-switch v-model="changeValue1" active-color="#bda06f" inactive-color="#b0b0b0" @change="onClickOption('option_tomorrow_fortune')"></el-switch></div>
                 <div class="menu_bar_text">明日运势</div>
               </div>
               <div class="menu_bar">
-                <div class="menu_bar_pointer"><el-switch v-model="changeValue2" active-color="#bda06f" inactive-color="#b0b0b0" @click="onClickOption(2)"></el-switch></div>
+                <div class="menu_bar_pointer"><el-switch v-model="changeValue2" active-color="#bda06f" inactive-color="#b0b0b0" @change="onClickOption('option_notify_push')"></el-switch></div>
                 <div class="menu_bar_text">事件推送</div>
               </div>
             </div>
@@ -53,15 +53,17 @@ export default {
     init() {
       getOptionState()
         .then((result) => {
-          this.changeValue0 = result[0] === '1'
-          this.changeValue1 = result[1] === '1'
-          this.changeValue2 = result[2] === '1'
+          var _value = result.result
+          this.changeValue0 = _value.today_fortune !== undefined && _value.today_fortune === true
+          this.changeValue1 = _value.tomorrow_fortune !== undefined && _value.tomorrow_fortune === true
+          this.changeValue2 = _value.notify_push !== undefined && _value.notify_push === true
         })
         .catch((err) => {
           console.log(err)
         })
     },
     onClickOption(e) {
+      console.log(e)
       optionChange(e)
         .then((result) => {})
         .catch((err) => {

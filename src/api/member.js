@@ -48,14 +48,14 @@ export function personCreate(_type, _nickName, _gender, _date, _time) {
   })
 }
 
-export function personModify(_personId, _type, _nickName, _gender, _date, _time) {
+export function personModify(_personId, _nickName, _gender, _date, _time) {
   return request({
     url: '/i',
     method: 'post',
     dataType: 'json',
     data: {
       method: 'personmodify',
-      params: [_personId, _type, _nickName, _gender, _date, _time]
+      params: [_personId, _nickName, _gender, _date, _time]
     }
   })
 }

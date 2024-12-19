@@ -9,27 +9,32 @@
               <div style="align: left; justify-self: left" class="dialog_text">邮箱</div>
             </div>
           </div>
-          <div class="dialog_white_panel">
+          <div v-if="emailSetted && loaded" class="dialog_white_panel">
+            <div class="dialog_white_panel_child">
+              <div>已绑定邮箱:{{ currentEmail }}</div>
+            </div>
+          </div>
+          <div v-if="!emailSetted && loaded" class="dialog_white_panel">
             <div class="dialog_white_panel_child">
               <input v-model="email" style="text-align: left; width: inherit" type="text" class="input_normal" placeholder="请输入邮箱" />
             </div>
           </div>
-          <div class="dialog_white_panel">
+          <div v-if="!emailSetted && loaded" class="dialog_white_panel">
             <div class="dialog_white_panel_child">
               <div style="align: left; justify-self: left" class="btn_link" @click="onBindEmail1Click">发送验证码到邮箱</div>
             </div>
           </div>
-          <div v-if="emailSended" class="dialog_white_panel" style="margin-top: 40px">
+          <div v-if="emailSended && loaded" class="dialog_white_panel" style="margin-top: 40px">
             <div class="dialog_white_panel_child">
               <div style="align: left; justify-self: left" class="dialog_text">邮件内的验证码</div>
             </div>
           </div>
-          <div v-if="emailSended" class="dialog_white_panel">
+          <div v-if="emailSended && loaded" class="dialog_white_panel">
             <div class="dialog_white_panel_child">
               <input v-model="code" style="text-align: left; width: inherit" type="text" class="input_normal" placeholder="请输入验证码" />
             </div>
           </div>
-          <div v-if="emailSended" class="dialog_white_panel">
+          <div v-if="emailSended && loaded" class="dialog_white_panel">
             <div class="dialog_panel_child">
               <input type="button" value="保存" class="btn_brown" style="width: 100%" @click="onBindEmail2Click" />
             </div>
@@ -40,9 +45,14 @@
     <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="modalToastShow = false"></ModalToast>
   </div>
 </template>
+<style scoped>
+[v-cloak] {
+  display: none;
+}
+</style>
 <script>
 import ReturnBar from '../../components/ReturnBar'
-import { bindEmail1, bindEmail2 } from '../../api/member'
+import { bindEmail1, bindEmail2, getMemberInfo } from '../../api/member'
 import { validateEmail } from '../../utils/validate'
 import ModalToast from '../../components/ModalToast'
 export default {
@@ -66,11 +76,30 @@ export default {
       code: '',
       emailSended: false,
       modalToastShow: false,
-      toastContent: ''
+      toastContent: '',
+      currentEmail: '',
+      emailSetted: false,
+      loaded: false
     }
   },
-  created() {},
+  created() {
+    this.init()
+  },
   methods: {
+    init() {
+      this.emailSetted = false
+      getMemberInfo()
+        .then((result) => {
+          if (result.result.email !== '') {
+            this.currentEmail = result.result.email
+            this.emailSetted = this.currentEmail !== ''
+          }
+          this.loaded = true
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     showToast(_content) {
       this.toastContent = _content
       this.modalToastShow = true

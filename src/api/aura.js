@@ -6,7 +6,7 @@ export function getAuraHistory(_page, _size) {
     method: 'post',
     dataType: 'json',
     data: {
-      method: 'aurahistory',
+      method: 'pointlog',
       params: [_page, _size]
     }
   })

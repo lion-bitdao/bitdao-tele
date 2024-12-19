@@ -4,7 +4,7 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.APP_BASE_API, // url = base url + request url
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 300000, // request timeout
   headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json;charset=utf-8' }
@@ -20,15 +20,15 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['Authorization'] = 'Bearer ' + _token
+      config.headers['token'] = _token
     } else {
       if (store.state.token || window.localStorage.getItem('TOKEN')) {
-        config.headers['Authorization'] = store.state.token || window.localStorage.getItem('TOKEN')
+        config.headers['token'] = store.state.token || window.localStorage.getItem('TOKEN')
       }
     }
     if (store.state.uid || window.localStorage.getItem('UID')) {
       config.params = {
-        user_id: store.state.uid || window.localStorage.getItem('UID')
+        tid: store.state.uid || window.localStorage.getItem('UID')
       }
     }
     return config
@@ -55,14 +55,8 @@ service.interceptors.response.use(
   (response) => {
     const res = response.data
     try {
-      if (res.base_resp !== undefined && res.base_resp !== null && res.base_resp.status_code === 19001) {
-        store.dispatch('user/resetToken').then(() => {
-          location.reload()
-          next(`/login?redirect=${to.path}`)
-        })
-        return
-      } else if (res.base_resp !== undefined && res.base_resp !== null && res.base_resp.status_code !== 0) {
-        return Promise.reject(res.base_resp.status_msg)
+      if (res !== undefined && res.code !== null && res.code !== '200') {
+        return Promise.reject(res.error)
       }
     } catch (e) {
       console.log(e)

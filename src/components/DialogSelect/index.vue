@@ -2,13 +2,49 @@
   <div>
     <div v-for="row in rows" :key="row.index" class="dialog_row">
       <div v-for="item in row.row.items" :key="item.index">
-        <div v-if="item.text !== ''" :class="isItemSelected(item) ? 'input_active' : 'input_normal'" :style="rowButtonStyle" @click="onChoice(item)">{{ item.text }}</div>
+        <div v-if="item.text !== ''" :class="isItemSelected(item) ? 'dialogselect_active' : 'dialogselect_normal'" :style="rowButtonStyle" @click="onChoice(item)">{{ item.text }}</div>
         <div v-if="item.text === ''" :style="rowButtonStyle" />
       </div>
     </div>
   </div>
 </template>
-<style></style>
+<style>
+.dialogselect_normal {
+  background: #fffefd;
+  border: 1px solid #b0b0b0;
+  border-radius: 12px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  color: #b0b0b0;
+}
+
+.dialogselect_normal:hover {
+  background: #ffffff;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  color: #2a2a2a;
+}
+
+.dialogselect_active {
+  background: #ffffff;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  color: #2a2a2a;
+}
+</style>
 <script>
 export default {
   name: 'DialogSelect',
@@ -58,7 +94,7 @@ export default {
   methods: {
     isItemSelected(item) {
       if (this.itemsSelected !== undefined && this.itemsSelected.length > 0) {
-        var finded = this.itemsSelected.find((t) => t === item.id)
+        var finded = this.itemsSelected.find((t) => t.toString() === item.id.toString())
         return finded !== undefined
       }
       return false

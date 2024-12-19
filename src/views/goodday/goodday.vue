@@ -58,7 +58,8 @@ export default {
         size: 20,
         status: 0,
         filter: ''
-      }
+      },
+      token: this.$route.query.t
     }
   },
   created() {},

@@ -14,7 +14,8 @@ export function getRelations() {
 
 export function getRelation(_id) {
   var _relations = getRelations()
-  return _relations.find((t) => t.id === _id)
+  var _finded = _relations.find((t) => t.id === _id)
+  return _finded === null || _finded === undefined ? '其他' : _finded.text
 }
 
 export function getGenders() {
@@ -26,5 +27,6 @@ export function getGenders() {
 
 export function getGender(_id) {
   var _values = getGenders()
-  return _values.find((t) => t.id === _id)
+  var _finded = _values.find((t) => t.id.toString() === _id)
+  return _finded === null || _finded === undefined ? '未知' : _finded.text
 }

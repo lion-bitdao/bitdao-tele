@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
   align-content: center;
-  color: #b0b0b0;
+  color: #000000;
 }
 
 .input_normal .el-input__inner {
@@ -18,7 +18,7 @@
   justify-content: center;
   align-items: center;
   align-content: center;
-  color: #b0b0b0;
+  color: #000000;
 }
 
 .input_normal:hover {
@@ -207,12 +207,14 @@
   width: inherit;
   margin-left: 15px;
   margin-right: 15px;
+  color: #000000;
 }
 
 .dialog_white_panel {
   display: flex;
   width: 100%;
   margin-top: 15px;
+  color: #000000;
 }
 
 .dialog_white_panel_ver {
@@ -220,6 +222,7 @@
   width: 100%;
   margin-top: 15px;
   flex-direction: column;
+  color: #000000;
 }
 
 .menu_panel {

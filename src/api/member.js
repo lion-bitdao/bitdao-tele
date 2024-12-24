@@ -95,3 +95,15 @@ export function bindEmail2(_code) {
     }
   })
 }
+
+export function ActiveTrailVIP() {
+  return request({
+    url: '/i',
+    method: 'post',
+    dataType: 'json',
+    data: {
+      method: 'activetrailvip',
+      params: []
+    }
+  })
+}

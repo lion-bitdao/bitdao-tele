@@ -1,43 +1,44 @@
 <template>
   <div class="app-container">
-    <div class="dialog">
-      <div class="dialog_head">吉⽇推算</div>
-      <div class="dialog_body">
+    <el-container class="dialog_white">
+      <ReturnBar title="吉日推算" :show-back="from !== undefined && from !== ''"></ReturnBar>
+      <el-main class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div style="align: left; justify-self: left; margin-left: 15px" class="dialog_text">事项</div>
-          <div class="dialog_panel">
-            <div class="dialog_panel_child" style="margin-left: 5px; margin-right: 15px">
-              <DialogSelect :data-source="rowsData" :selected-items="selectedItems" :column="3" :column-space="4" :button-width="100" :multi-select="true" @on-select="handleOnChoice" />
+          <div class="dialog_white_panel">
+            <div class="dialog_white_panel_child">
+              <DialogSelect :data-source="rowsData" :selected-items="selectedItems" :column="3" :column-space="4" :button-width="96" :multi-select="false" @on-select="onChoice" />
             </div>
           </div>
-          <div class="dialog_panel">
-            <div class="dialog_panel_child">
+          <div class="dialog_white_panel">
+            <div class="dialog_white_panel_child">
               <div style="flex: 1; text-align: justify" class="dialog_text">开始日期</div>
             </div>
           </div>
-          <div class="dialog_panel">
-            <div class="dialog_panel_child">
-              <input style="text-align: center; width: inherit" type="number" class="input_normal" placeholder="选择开始日期" />
+          <div class="dialog_white_panel">
+            <div class="dialog_white_panel_child">
+              <el-date-picker v-model="seletedDate" type="date" format="yyyy年MM月dd日" placeholder="选择开始日期" class="input_normal" style="text-align: center; width: inherit"></el-date-picker>
             </div>
           </div>
-          <div class="dialog_panel">
-            <div class="dialog_panel_child">会给出开始⽇期3个⽉内的吉⽇</div>
+          <div class="dialog_white_panel">
+            <div class="dialog_white_panel_child">会给出开始⽇期3个⽉内的吉⽇</div>
           </div>
-          <div class="dialog_panel">
-            <div class="dialog_panel_child">
-              <input type="button" value="推算" class="btn_brown" style="width: 100%" />
+          <div class="dialog_white_panel">
+            <div class="dialog_white_panel_child">
+              <input type="button" value="推算" class="btn_brown" style="width: 100%" @click="onClickPredict" />
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 <script>
 import DialogSelect from '../../components/DialogSelect'
+import ReturnBar from '../../components/ReturnBar'
 export default {
   name: 'GoodDay',
-  components: { DialogSelect },
+  components: { DialogSelect, ReturnBar },
   data() {
     return {
       listLoading: false,
@@ -59,13 +60,16 @@ export default {
         status: 0,
         filter: ''
       },
-      token: this.$route.query.t
+      token: this.$route.query.t,
+      from: this.$route.query.f,
+      seletedDate: ''
     }
   },
   created() {},
   methods: {
-    handleOnSelect(items) {
-      this.selectedItems = items
+    onChoice(e) {},
+    onClickPredict(e) {
+      window.Telegram.WebApp.close()
     },
     jumpTo(_page, _query) {
       var _jumpArg = { path: _page }

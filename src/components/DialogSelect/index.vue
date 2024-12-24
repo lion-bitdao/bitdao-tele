@@ -2,8 +2,8 @@
   <div>
     <div v-for="row in rows" :key="row.index" class="dialog_row">
       <div v-for="item in row.row.items" :key="item.index">
-        <div v-if="item.text !== ''" :class="isItemSelected(item) ? 'dialogselect_active' : 'dialogselect_normal'" :style="rowButtonStyle" @click="onChoice(item)">{{ item.text }}</div>
-        <div v-if="item.text === ''" :style="rowButtonStyle" />
+        <div v-if="item.text !== ''" :class="isItemSelected(item) ? 'dialogselect_active' : 'dialogselect_normal'" :style="item.style" @click="onChoice(item)">{{ item.text }}</div>
+        <div v-if="item.text === ''" :style="item.style" />
       </div>
     </div>
   </div>
@@ -110,7 +110,8 @@ export default {
       var dataLen = this.dataSource.length
       for (currentIndex = 0; currentIndex < dataLen; currentIndex++) {
         columnIndex += 1
-        row.items.push({ index: currentIndex, text: this.dataSource[currentIndex].text, id: this.dataSource[currentIndex].id })
+        var _style = columnIndex === this.column ? `margin-left:${this.columnSpace}px;width:${this.buttonWidth}px` : columnIndex === 1 ? `margin-right:${this.columnSpace}px;width:${this.buttonWidth}px` : `margin:${this.columnSpace}px;width:${this.buttonWidth}px`
+        row.items.push({ index: currentIndex, text: this.dataSource[currentIndex].text, id: this.dataSource[currentIndex].id, style: _style })
         if (columnIndex >= this.column) {
           rows.push({ index: rowIndex, row: row })
           rowIndex += 1
@@ -122,10 +123,12 @@ export default {
       if (columnIndex < this.column) {
         for (var j = columnIndex; j <= this.column; j++) {
           currentIndex += 1
-          row.items.push({ index: currentIndex, text: '' })
+          var _filestyle = columnIndex === this.column ? `margin-left:${this.columnSpace}px;width:${this.buttonWidth}px` : columnIndex === 1 ? `margin-right:${this.columnSpace}px;width:${this.buttonWidth}px` : `margin:${this.columnSpace}px;width:${this.buttonWidth}px`
+          row.items.push({ index: currentIndex, text: '', style: _filestyle })
         }
         rows.push({ index: rowIndex, row: row })
       }
+      console.log(rows)
       this.rows = rows
     },
     onChoice(item) {

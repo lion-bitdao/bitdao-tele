@@ -54,7 +54,7 @@ export default {
     },
     timeout: {
       type: Number,
-      default: 3
+      default: 2
     }
   },
   data() {

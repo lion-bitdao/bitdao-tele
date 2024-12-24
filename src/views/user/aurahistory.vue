@@ -1,9 +1,9 @@
 <template>
-  <div class="app-container" style="height: 100vh">
-    <div class="dialog_white">
+  <div class="app-container">
+    <el-container class="dialog_white" style="height: 89vh">
       <ReturnBar title="灵力记录"></ReturnBar>
-      <div class="dialog_white_body">
-        <div style="align: center; justify-content: center; justify-items: center; margin-left: 15px; margin-right: 15px">
+      <el-main class="dialog_white_body">
+        <el style="align: center; justify-content: center; justify-items: center; margin-left: 15px; margin-right: 15px">
           <div class="aurahis_head">
             <div class="aurahis_head_title">{{ aura | round }}</div>
             <div class="aurahis_head_subtitle">当前灵力</div>
@@ -18,9 +18,9 @@
               <div class="aurahis_item_num">{{ item.point | round }}</div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </el>
+      </el-main>
+    </el-container>
   </div>
 </template>
 

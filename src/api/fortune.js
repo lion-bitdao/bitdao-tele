@@ -1,5 +1,17 @@
 import request from '@/utils/request'
 
+export function getDailyForcast() {
+  return request({
+    url: '/i',
+    method: 'post',
+    dataType: 'json',
+    data: {
+      method: 'dailyforcast',
+      params: []
+    }
+  })
+}
+
 export function getFortuneHistory(_page, _size) {
   return request({
     url: '/i',

@@ -1,11 +1,11 @@
 <template>
-  <div class="app-container" style="height: 100vh">
-    <div class="dialog_white">
+  <div class="app-container" style="height: 89vh">
+    <el-container class="dialog_white" style="height: 89vh">
       <ReturnBar title="用户信息"></ReturnBar>
-      <div class="dialog_white_body">
+      <el-main class="dialog_white_body">
         <div style="align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel_ver">
-            <div v-for="item in list" :key="item" class="userprofile_item">
+            <div v-for="item in list" :key="item.id" class="userprofile_item">
               <div class="userprofile_item_icon"></div>
               <div class="userprofile_item_name">
                 <div>{{ item.nickname }}</div>
@@ -22,18 +22,17 @@
                 </div>
               </div>
             </div>
-            <div class="dialog_white_panel">
-              <div class="dialog_panel_child">
-                <input type="button" value="新增用户" class="btn_brown" style="width: 100%" @click="jumpTo('/edituserprofile', undefined)" />
-              </div>
-            </div>
           </div>
         </div>
-      </div>
-
+      </el-main>
+      <el-footer class="dialog_white_panel" style="height: fit-content">
+        <div class="dialog_panel_child">
+          <input type="button" value="新增用户" class="btn_brown" style="width: 100%" @click="jumpTo('/edituserprofile', undefined)" />
+        </div>
+      </el-footer>
       <ModalDialog v-if="modalDlgShow" :content="modalDlgText" :submitenabled="true" @on-canceled="onModalDlgCanceled" @on-submitted="onModalDlgSubmitted"></ModalDialog>
       <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="modalToastShow = false"></ModalToast>
-    </div>
+    </el-container>
   </div>
 </template>
 <script>
@@ -132,7 +131,7 @@ export default {
   border-radius: 12px;
   display: flex;
   flex-direction: row;
-  width: 90%;
+  width: 93%;
   margin-left: 5%;
   margin-bottom: 15px;
 }

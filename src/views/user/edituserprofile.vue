@@ -1,8 +1,8 @@
 <template>
-  <div class="app-container" style="height: 100vh">
-    <div class="dialog_white">
+  <div class="app-container" style="height: 89vh">
+    <el-container class="dialog_white" style="height: 89vh">
       <ReturnBar :title="pageTitle"></ReturnBar>
-      <div class="dialog_white_body">
+      <el-main class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
@@ -40,8 +40,7 @@
               :picker-options="{
                 start: '00:00',
                 step: '00:15',
-                end: '23:45',
-                minTime: startTime
+                end: '23:45'
               }"
               class="input_normal"
               format="HH时mm分"
@@ -60,13 +59,13 @@
             <DialogSelect :key="reloadData" :data-source="relations" :column="3" :column-space="4" :button-width="98" :selected-items="relationSeleted" @on-select="selectingRelation" />
           </div>
         </div>
-        <div class="dialog_white_panel">
-          <div class="dialog_panel_child">
-            <input type="button" value="保存" class="btn_brown" style="width: 100%; margin-left: 15px; margin-right: 15px" @click="onSaveClick" />
-          </div>
+      </el-main>
+      <el-footer class="dialog_white_panel" style="height: fit-content">
+        <div class="dialog_panel_child">
+          <input type="button" value="保存" class="btn_brown" style="width: 100%" @click="onSaveClick" />
         </div>
-      </div>
-    </div>
+      </el-footer>
+    </el-container>
     <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="modalToastShow = false"></ModalToast>
   </div>
 </template>
@@ -85,7 +84,7 @@ export default {
     return {
       listLoading: false,
       rowsData: getGenders(),
-      relations: [],
+      relations: getRelations(),
       total: 0,
       list: [],
       filter: {
@@ -107,7 +106,7 @@ export default {
       genderItems: [],
       modalToastShow: false,
       toastContent: '',
-      reloadData: new Date()
+      reloadData: moment(new Date()).format('yyyyMMddHHmmss') + '0'
     }
   },
   created() {
@@ -168,6 +167,7 @@ export default {
     },
 
     init() {
+      var _count = moment(new Date()).format('yyyyMMddHHmmss')
       getPersonList()
         .then((result) => {
           this.list = result.result
@@ -178,7 +178,7 @@ export default {
             _relations.splice(0, 1)
           }
           this.relations = _relations
-          this.reloadData = new Date()
+          this.reloadData = _count
         })
         .catch((err) => {
           console.log(err)
@@ -201,7 +201,9 @@ export default {
           if (_value.type === 'self') {
             this.relations = getRelations()
           }
-          this.reloadData = new Date()
+          this.$nextTick(() => {
+            this.reloadData = _count + '1'
+          })
         })
         .catch((err) => {
           console.log(err)

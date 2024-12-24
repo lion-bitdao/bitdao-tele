@@ -7,6 +7,7 @@
 <script>
 export default {
   name: 'App',
+  viewHeight: window.Telegram.WebApp.viewportHeight - 200,
   created() {
     // 在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem('store')) {
@@ -29,6 +30,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  overflow-x: hidden;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" style="height: 100vh">
+  <div class="app-container" style="height: fit-content">
     <ModalToast v-if="modalToastShow" :content="toastContent"></ModalToast>
   </div>
 </template>

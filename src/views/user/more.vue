@@ -1,8 +1,8 @@
 <template>
-  <div class="app-container" style="height: 100vh">
-    <div class="dialog_white">
-      <ReturnBar title="选项"></ReturnBar>
-      <div class="dialog_white_body">
+  <div class="app-container">
+    <el-container class="dialog_white" style="height: 80vh">
+      <ReturnBar title="更多"></ReturnBar>
+      <el-main class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel" style="flex-direction: column">
             <div class="menu_panel">
@@ -14,9 +14,13 @@
                 <div class="menu_bar_pointer"><i class="el-icon-arrow-right"></i></div>
                 <div class="menu_bar_text" @click="jumpTo('/notification', undefined)">通知开关</div>
               </div>
-              <div class="menu_bar_bottom">
+              <div class="menu_bar">
                 <div class="menu_bar_pointer"><i class="el-icon-arrow-right"></i></div>
                 <div class="menu_bar_text" @click="jumpTo('/verifyemail', undefined)">邮箱验证</div>
+              </div>
+              <div class="menu_bar_bottom">
+                <div class="menu_bar_pointer"><i class="el-icon-arrow-right"></i></div>
+                <div class="menu_bar_text" @click="jumpTo('/vip', { f: 1 })">激活VIP</div>
               </div>
             </div>
             <div class="menu_panel">
@@ -31,8 +35,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 <script>

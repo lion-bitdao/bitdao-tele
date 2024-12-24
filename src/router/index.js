@@ -33,6 +33,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/vip',
+    component: () => import('@/views/user/vip'),
+    hidden: true
+  },
+  {
     path: '/dailyforcast',
     component: () => import('@/views/user/dailyforcast'),
     hidden: true

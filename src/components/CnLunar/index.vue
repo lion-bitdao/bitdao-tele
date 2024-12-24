@@ -23,14 +23,14 @@
     </div>
     <div class="lunar_date_row">
       <div class="lunar_date_year">
-        <div v-for="item in times" :key="item" class="lunar_time">
+        <div v-for="item in times" :key="item.text" class="lunar_time">
           <div class="lunar_time_text">{{ item.text }}</div>
           <div class="lunar_time_icon_panel">
             <div v-if="item.good" class="lunar_time_icon"><img src="../../assets/images/calendar_ji@1x.png" /></div>
             <div v-if="!item.good" class="lunar_time_icon"><img src="../../assets/images/calendar_xiong@1x.png" /></div>
           </div>
           <div class="lunar_time_icon_panel">
-            <div v-if="item.seleted" class="lunar_time_dot"><img src="../../assets/images/calendar_now@1x.png" /></div>
+            <div v-if="item.selected" class="lunar_time_dot"><img src="../../assets/images/calendar_now@1x.png" /></div>
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@
   border-color: black;
   display: flex;
   flex-direction: column;
-  width: 375px;
+  width: 330px;
   height: auto;
 }
 
@@ -65,8 +65,8 @@
   justify-content: flex-end;
   justify-items: flex-end;
   justify-self: flex-end;
-  width: 335px;
-  margin: 20px;
+  width: 315px;
+  margin: 10px;
 }
 .lunar_date {
   display: flex;
@@ -105,7 +105,7 @@
   letter-spacing: 0;
   line-height: 20px;
   margin: 2px;
-  padding-left: 2px;
+  padding-left: 1px;
 }
 
 .lunar_time {

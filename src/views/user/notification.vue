@@ -1,8 +1,8 @@
 <template>
-  <div class="app-container" style="height: 100vh">
-    <div class="dialog_white">
+  <div class="app-container">
+    <el-container class="dialog_white">
       <ReturnBar title="通知开关"></ReturnBar>
-      <div class="dialog_white_body">
+      <el-main class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel" style="flex-direction: column">
             <div class="menu_panel">
@@ -21,8 +21,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 <script>

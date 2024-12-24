@@ -30,3 +30,7 @@ export function getGender(_id) {
   var _finded = _values.find((t) => t.id.toString() === _id)
   return _finded === null || _finded === undefined ? '未知' : _finded.text
 }
+
+export function getPredictType(_type) {
+  return _type === 'luckynumber' ? '幸运数字' : _type === 'xiao6ren' ? '卜卦问事' : '吉日推算'
+}

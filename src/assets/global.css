@@ -8,6 +8,7 @@
   align-items: center;
   align-content: center;
   color: #000000;
+  font-size: 16px;
 }
 
 .input_normal .el-input__inner {
@@ -19,6 +20,7 @@
   align-items: center;
   align-content: center;
   color: #000000;
+  font-size: 16px;
 }
 
 .input_normal:hover {
@@ -31,6 +33,7 @@
   align-items: center;
   align-content: center;
   color: #2a2a2a;
+  font-size: 16px;
 }
 
 .input_active {
@@ -43,6 +46,7 @@
   align-items: center;
   align-content: center;
   color: #2a2a2a;
+  font-size: 16px;
 }
 
 .select_normal {
@@ -74,6 +78,7 @@
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   height: 45px;
+  font-size: 18px;
 }
 
 .btn_brown {
@@ -83,6 +88,7 @@
   border-radius: 12px;
   height: 45px;
   color: #ffffff;
+  font-size: 18px;
 }
 
 .btn_brown:hover {
@@ -92,6 +98,7 @@
   border-radius: 12px;
   height: 45px;
   color: #d8d8d8;
+  font-size: 18px;
 }
 
 .dialog_head {
@@ -156,25 +163,19 @@
   width: 100%;
   margin-top: 15px;
 }
-
-.dialog_white_head {
-  background: #ffffff;
-  height: 47px;
-  align-content: center;
-  border-radius: 20px 20px 0 0;
-  width: 375px;
-  align-self: center;
-  font-size: 18px;
-  color: #2a2a2a;
-  letter-spacing: 0;
-  text-align: center;
-  line-height: 32px;
+.el-main {
+  padding: 0px;
+}
+.el-header {
+  padding: 0px;
+  height: fit-content;
 }
 
 .dialog_white_body {
   background: #ffffff;
-  width: 375px;
-  height: 100vh;
+  width: 99vw;
+  height: 89vh;
+  overflow-x: hidden;
 }
 
 .dialog_white {
@@ -220,7 +221,7 @@
 .dialog_white_panel_ver {
   display: flex;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 0px;
   flex-direction: column;
   color: #000000;
 }

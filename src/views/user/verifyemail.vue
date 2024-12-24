@@ -1,8 +1,8 @@
 <template>
-  <div class="app-container" style="height: 100vh">
-    <div class="dialog_white">
+  <div class="app-container">
+    <el-container class="dialog_white">
       <ReturnBar title="邮箱验证"></ReturnBar>
-      <div class="dialog_white_body">
+      <el-main class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
@@ -40,8 +40,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </el-main>
+    </el-container>
     <ModalToast v-if="modalToastShow" :content="toastContent" @on-time="modalToastShow = false"></ModalToast>
   </div>
 </template>

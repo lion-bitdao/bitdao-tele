@@ -1,25 +1,35 @@
 <template>
-  <div class="dialog_white_head">
-    <div class="dialog_white_head_return">
-      <i class="el-icon-arrow-left" style="width: 32px" @click="goBack"></i>
-      <div class="dialog_white_head_title">{{ title }}</div>
-    </div>
-  </div>
+  <el-header class="dialog_white_head" style="height: 47px">
+    <div class="dialog_white_head_title" @click="goBack">{{ title }}</div>
+  </el-header>
 </template>
 <style scoped>
-.dialog_white_head_return {
+.dialog_white_head {
+  background: #ffffff;
+  height: 47px;
   align-content: center;
-  width: 325px;
-  display: flex;
-  flex-direction: row;
-  margin-left: 25px;
-  margin-right: 25px;
-  margin-top: 15px;
+  border-radius: 20px 20px 0 0;
+  width: 100vw;
+  align-self: center;
+  font-size: 18px;
+  color: #2a2a2a;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 32px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
+
 .dialog_white_head_title {
+  display: flex;
   flex: auto;
   justify-content: center;
-  margin-right: 32px;
+  height: 42px;
+  background-image: url('../../assets/images/back.png');
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position-y: 8px;
+  align-content: center;
 }
 </style>
 <script>
@@ -29,6 +39,10 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    showBack: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -39,7 +53,11 @@ export default {
   mounted() {},
   methods: {
     goBack() {
-      this.$router.go(-1)
+      if (this.showBack) {
+        this.$router.go(-1)
+      } else {
+        window.Telegram.WebApp.close()
+      }
     }
   }
 }

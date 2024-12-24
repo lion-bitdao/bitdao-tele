@@ -1,47 +1,44 @@
 <template>
-  <div class="app-container" style="height: 100vh">
+  <div class="app-container">
     <div class="dialog_white">
-      <div class="dialog_white_head"></div>
       <div v-if="!loaded" class="dialog_white_body">登录已过期,请从telegram菜单重新进入此页面!</div>
       <div v-if="loaded" class="dialog_white_body">
         <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
           <div class="avatar_panel">
-            <div class="avatar"></div>
+            <img src="../../assets/images/avatar.png" class="avatar" />
             <div class="avatar_name">{{ nickName }}</div>
             <div class="avatar_attrib_panel">
               <div class="avatar_attrib_item" @click="jumpTo('/aurahistory', undefined)">
-                <div class="avatar_attrib_item_icon"><img src="../../assets/images/home_group1_aura@1x.png" class="avatar_attrib_item_icon_img" /></div>
-                <div class="avatar_attrib_item_text">灵力:{{ [point] }}</div>
+                <div class="avatar_attrib_item_icon"><img src="../../assets/images/home_group1_aura@2x.png" class="avatar_attrib_item_icon_img" /></div>
+                <div class="avatar_attrib_item_text">灵力值:{{ point }}</div>
               </div>
               <div class="avatar_attrib_item" @click="jumpTo('/userprofile', undefined)">
-                <div class="avatar_attrib_item_icon"><img src="../../assets/images/home_group1_profile@1x.png" class="avatar_attrib_item_icon_img" /></div>
+                <div class="avatar_attrib_item_icon"><img src="../../assets/images/home_group1_profile@2x.png" class="avatar_attrib_item_icon_img" /></div>
                 <div class="avatar_attrib_item_text">用户信息</div>
               </div>
               <div class="avatar_attrib_item" @click="jumpTo('/more', undefined)">
-                <div class="avatar_attrib_item_icon"><img src="../../assets/images/home_group1_more@1x.png" class="avatar_attrib_item_icon_img" /></div>
-                <div class="avatar_attrib_item_text">选项</div>
+                <div class="avatar_attrib_item_icon"><img src="../../assets/images/home_group1_more@2x.png" class="avatar_attrib_item_icon_img" /></div>
+                <div class="avatar_attrib_item_text">更多</div>
               </div>
             </div>
           </div>
-          <div class="dialog_white_panel">
-            <div class="dialog_white_panel_child" style="margin-left: 15px; margin-right: 15px">
-              <div class="avatar_attrib_panel_button" style="width: 100%" @click="jumpTo('/dailyforcast', { undefined })">
-                <img src="../../assets/images/home_group2_rili@1x.png" class="type_button_icon_img" />
-                <div style="margin-left: 10px">每日运势</div>
-              </div>
+          <div class="lunar_button">
+            <div class="avatar_attrib_panel_button" @click="jumpTo('/dailyforcast', { undefined })">
+              <img src="../../assets/images/home_group2_rili@2x.png" class="type_button_icon_img" />
+              <div style="margin-left: 10px">每日运势</div>
             </div>
           </div>
           <div class="avatar_attrib_panel">
             <div class="type_button" @click="jumpTo('/luckynumber', undefined)">
-              <div class="type_button_icon"><img src="../../assets/images/home_group3_num@1x.png" class="type_button_icon_img" /></div>
+              <div class="type_button_icon"><img src="../../assets/images/home_group3_num@2x.png" class="type_button_icon_img" /></div>
               <div class="avatar_attrib_item_text">幸运数字</div>
             </div>
             <div class="type_button" style="margin-left: 15px" @click="jumpTo('/divination', undefined)">
-              <div class="type_button_icon"><img src="../../assets/images/home_group3_div@1x.png" class="type_button_icon_img" /></div>
+              <div class="type_button_icon"><img src="../../assets/images/home_group3_div@2x.png" class="type_button_icon_img" /></div>
               <div class="avatar_attrib_item_text">卜卦问事</div>
             </div>
             <div class="type_button" style="margin-left: 15px" @click="jumpTo('/goodday', undefined)">
-              <div class="type_button_icon"><img src="../../assets/images/home_group3_days@1x.png" class="type_button_icon_img" /></div>
+              <div class="type_button_icon"><img src="../../assets/images/home_group3_days@2x.png" class="type_button_icon_img" /></div>
               <div class="avatar_attrib_item_text">吉日推算</div>
             </div>
           </div>
@@ -74,7 +71,6 @@ export default {
       setUid(this.$route.query.tid)
       getMemberInfo()
         .then((result) => {
-          console.log(result)
           const _value = result.result
           this.nickName = _value.nickname.trim() === '' ? '匿名' : _value.nickname
           this.point = parseInt(_value.point)
@@ -95,6 +91,7 @@ export default {
       }
       _query.tid = this.tid
       _query.t = this.token
+      _query.f = '1'
       _jumpArg.query = _query
       this.$router.push(_jumpArg)
     },
@@ -105,12 +102,21 @@ export default {
 }
 </script>
 <style>
+.lunar_button {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  justify-self: center;
+  flex-basis: 100%;
+  width: 95%;
+  margin-top: 15px;
+}
 .avatar {
   background: #d8d8d8;
   border: 2px solid #979797;
   border-radius: 90px;
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
   display: flex;
   margin-top: 15px;
 }
@@ -125,7 +131,7 @@ export default {
   background: #ffffff;
   border-radius: 15px;
   width: 95%;
-  height: 65px;
+  height: 75px;
   margin-top: 15px;
   display: flex;
   flex-direction: row;
@@ -136,10 +142,11 @@ export default {
   background: #ffffff;
   border-radius: 15px;
   width: 95%;
-  height: 45px;
+  height: 55px;
   margin-top: 15px;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .avatar_attrib_item_icon {
@@ -148,6 +155,7 @@ export default {
   display: flex;
   justify-content: center;
   justify-items: center;
+  margin-bottom: 10px;
 }
 
 .avatar_attrib_item_icon_img {
@@ -158,7 +166,7 @@ export default {
 .avatar_attrib_panel_button {
   background-image: linear-gradient(90deg, #fae3aa 0%, #f3c371 100%);
   border-radius: 8px;
-  width: 95%;
+  width: 100%;
   height: 70px;
   font-size: 15px;
   color: #2a2a2a;
@@ -169,6 +177,7 @@ export default {
   flex-direction: row;
   align-items: center;
   align-content: center;
+  display: flex;
 }
 
 .avatar_attrib_item_text {

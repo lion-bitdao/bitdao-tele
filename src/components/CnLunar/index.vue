@@ -26,11 +26,11 @@
         <div v-for="item in times" :key="item.text" class="lunar_time">
           <div class="lunar_time_text">{{ item.text }}</div>
           <div class="lunar_time_icon_panel">
-            <div v-if="item.good" class="lunar_time_icon"><img src="../../assets/images/calendar_ji@1x.png" /></div>
-            <div v-if="!item.good" class="lunar_time_icon"><img src="../../assets/images/calendar_xiong@1x.png" /></div>
+            <div v-if="item.good" class="lunar_time_icon"><img src="../../assets/images/calendar_ji@2x.png" class="lunar_time_icon" /></div>
+            <div v-if="!item.good" class="lunar_time_icon"><img src="../../assets/images/calendar_xiong@2x.png" class="lunar_time_icon" /></div>
           </div>
           <div class="lunar_time_icon_panel">
-            <div v-if="item.selected" class="lunar_time_dot"><img src="../../assets/images/calendar_now@1x.png" /></div>
+            <div v-if="item.selected" class="lunar_time_dot"><img src="../../assets/images/calendar_now@2x.png" class="lunar_time_icon" /></div>
           </div>
         </div>
       </div>
@@ -72,6 +72,7 @@
   display: flex;
   flex-direction: column;
   flex: auto;
+  width: fit-content;
 }
 .lunar_date_day {
   font-size: 36px;
@@ -94,6 +95,7 @@
   border-left-style: solid;
   border-left-width: thin;
   writing-mode: vertical-rl;
+  width: 20px;
 }
 .lunar_time_text {
   border-left-color: #d8d8d8;

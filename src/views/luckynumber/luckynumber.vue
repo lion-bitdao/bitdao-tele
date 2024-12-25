@@ -7,7 +7,7 @@
           <div style="align: left; justify-self: left; margin-left: 15px" class="dialog_text">数字个数</div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <DialogSelect :data-source="rowsData" :column="5" :column-space="4" :button-width="55" @on-select="selectingNum" />
+              <DialogSelect :data-source="rowsData" :column="5" :column-space="4" :button-width="0" :multi-select="false" @on-select="selectingNum" />
             </div>
           </div>
           <div class="dialog_white_panel">

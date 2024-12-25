@@ -113,7 +113,6 @@ export default {
 }
 .avatar {
   background: #d8d8d8;
-  border: 2px solid #979797;
   border-radius: 90px;
   width: 65px;
   height: 65px;

@@ -17,7 +17,7 @@
           </div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <DialogSelect :data-source="rowsData" :selected-items="selectedItems" :column="3" :column-space="4" :button-width="96" :multi-select="false" @on-select="onClickSelect" />
+              <DialogSelect :data-source="rowsData" :selected-items="selectedItems" :column="3" :column-space="4" :button-width="0" :multi-select="false" @on-select="onClickSelect" />
             </div>
           </div>
           <div class="dialog_white_panel">

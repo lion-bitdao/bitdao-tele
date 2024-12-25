@@ -100,7 +100,18 @@ export default {
       return false
     },
     initRows() {
-      this.rowButtonStyle = `margin:${this.columnSpace}px;width:${this.buttonWidth}px`
+      var _buttonWidth = this.buttonWidth
+      if (_buttonWidth === 0) {
+        var _windowWidth = window.innerWidth
+        var _space = (this.column - 1) * 2 * this.columnSpace + 71
+        console.log(_windowWidth)
+        console.log(_space)
+        _windowWidth -= _space
+        console.log(_windowWidth)
+        _buttonWidth = _windowWidth / this.column
+        console.log(_buttonWidth)
+      }
+      this.rowButtonStyle = `margin:${this.columnSpace}px;width:${_buttonWidth}px`
       this.rows = []
       var rows = []
       var row = { items: [] }
@@ -110,7 +121,7 @@ export default {
       var dataLen = this.dataSource.length
       for (currentIndex = 0; currentIndex < dataLen; currentIndex++) {
         columnIndex += 1
-        var _style = columnIndex === this.column ? `margin-left:${this.columnSpace}px;width:${this.buttonWidth}px` : columnIndex === 1 ? `margin-right:${this.columnSpace}px;width:${this.buttonWidth}px` : `margin:${this.columnSpace}px;width:${this.buttonWidth}px`
+        var _style = columnIndex === this.column ? `margin-left:${this.columnSpace}px;width:${_buttonWidth}px` : columnIndex === 1 ? `margin-right:${this.columnSpace}px;width:${_buttonWidth}px` : `margin:${this.columnSpace}px;width:${_buttonWidth}px`
         row.items.push({ index: currentIndex, text: this.dataSource[currentIndex].text, id: this.dataSource[currentIndex].id, style: _style })
         if (columnIndex >= this.column) {
           rows.push({ index: rowIndex, row: row })

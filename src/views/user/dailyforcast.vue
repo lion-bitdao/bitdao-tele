@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-container class="dialog_white">
-      <ReturnBar title="每日运势"></ReturnBar>
+      <ReturnBar title="每日运势" :show-back="from !== undefined && from !== ''"></ReturnBar>
       <el-main class="dialog_white_body" style="margin-top: 5px; overflow-x: scroll">
         <div style="font-size: 32px; color: #2a2a2a; letter-spacing: 0; line-height: 32px; text-align: left; margin-left: 20px">每日运势</div>
         <div class="cnlunar">
@@ -28,6 +28,7 @@ import ReturnBar from '../../components/ReturnBar'
 import CnLunar from '../../components/CnLunar'
 import { getDailyForcast } from '../../api/fortune'
 import { getChineseTime } from '../../utils/chineselunar'
+import { setToken } from '../../utils/auth'
 export default {
   name: 'DailyForcast',
   components: { ReturnBar, CnLunar },
@@ -62,7 +63,9 @@ export default {
       cnday: '',
       good: '',
       bad: '',
-      lunarTimes: []
+      lunarTimes: [],
+      token: this.$route.query.t,
+      from: this.$route.query.f
     }
   },
   created() {
@@ -71,26 +74,29 @@ export default {
   methods: {
     init() {
       var _date = new Date()
-      getDailyForcast()
-        .then((result) => {
-          var _result = result.result
-          var _currentHour = getChineseTime(_date.getHours(), _date.getMinutes())
-          this.lunarDay = _result.luanr
-          this.date = _result.solar
-          this.cnyear = _result.ganzhi[0] + '年'
-          this.cnmonth = _result.ganzhi[1] + '月'
-          this.cnday = _result.ganzhi[2] + '日'
-          this.good = _result.yi.join(' ')
-          this.bad = _result.ji.join(' ')
-          var times = []
-          for (var i = 0; i < _result.hour.length; i++) {
-            times.push({ text: _result.hour[i][0] + '时', good: _result.hour[i][2] === '吉', selected: i === _currentHour })
-          }
-          this.lunarTimes = times
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      if (this.$route.query !== undefined && this.$route.query.t !== undefined) {
+        setToken(this.$route.query.t)
+        getDailyForcast()
+          .then((result) => {
+            var _result = result.result
+            var _currentHour = getChineseTime(_date.getHours(), _date.getMinutes())
+            this.lunarDay = _result.luanr
+            this.date = _result.solar
+            this.cnyear = _result.ganzhi[0] + '年'
+            this.cnmonth = _result.ganzhi[1] + '月'
+            this.cnday = _result.ganzhi[2] + '日'
+            this.good = _result.yi.join(' ')
+            this.bad = _result.ji.join(' ')
+            var times = []
+            for (var i = 0; i < _result.hour.length; i++) {
+              times.push({ text: _result.hour[i][0] + '时', good: _result.hour[i][2] === '吉', selected: i === _currentHour })
+            }
+            this.lunarTimes = times
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
     },
     jumpTo(_page, _query) {
       var _jumpArg = { path: _page }

@@ -3,7 +3,7 @@
     <el-container class="dialog_white">
       <ReturnBar title="卜卦问事" :show-back="from !== undefined && from !== ''"></ReturnBar>
       <el-main class="dialog_white_body">
-        <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
+        <div style="margin: 15px; text-align: center; justify-content: center; justify-items: center">
           <div style="text-align: center; justify-self: center; margin-left: 15px" class="dialog_text">请输入事项或选择快捷选项</div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">

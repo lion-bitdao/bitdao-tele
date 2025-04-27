@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getDailyForcast() {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -14,7 +14,7 @@ export function getDailyForcast() {
 
 export function getFortuneHistory(_page, _size) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -26,7 +26,7 @@ export function getFortuneHistory(_page, _size) {
 
 export function getGoodDate(_dvType, _date) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -38,7 +38,7 @@ export function getGoodDate(_dvType, _date) {
 
 export function getLuckyNumber(_numCount, _min, _max) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -50,7 +50,7 @@ export function getLuckyNumber(_numCount, _min, _max) {
 
 export function getDivination(_dvType) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {

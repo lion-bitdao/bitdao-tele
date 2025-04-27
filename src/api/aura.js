@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getAuraHistory(_page, _size) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {

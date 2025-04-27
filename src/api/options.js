@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getOptionState() {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -14,7 +14,7 @@ export function getOptionState() {
 
 export function optionChange(_type) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {

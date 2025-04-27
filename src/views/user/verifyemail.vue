@@ -105,7 +105,7 @@ export default {
       this.modalToastShow = true
     },
     onBindEmail2Click(item) {
-      bindEmail2(this.code)
+      bindEmail2(this.code, this.email)
         .then((ret) => {
           this.showToast('邮箱设置成功')
           this.emailSended = true

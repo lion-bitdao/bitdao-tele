@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getMemberInfo() {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -14,7 +14,7 @@ export function getMemberInfo() {
 
 export function getPersonList() {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -26,7 +26,7 @@ export function getPersonList() {
 
 export function getPersonInfo(_id) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -38,7 +38,7 @@ export function getPersonInfo(_id) {
 
 export function personCreate(_type, _nickName, _gender, _date, _time) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -50,7 +50,7 @@ export function personCreate(_type, _nickName, _gender, _date, _time) {
 
 export function personModify(_personId, _nickName, _gender, _date, _time) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -62,7 +62,7 @@ export function personModify(_personId, _nickName, _gender, _date, _time) {
 
 export function personRemove(_personId) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -74,7 +74,7 @@ export function personRemove(_personId) {
 
 export function bindEmail1(_email) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
@@ -84,21 +84,21 @@ export function bindEmail1(_email) {
   })
 }
 
-export function bindEmail2(_code) {
+export function bindEmail2(_code, _email) {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
       method: 'bindemail2',
-      params: [_code]
+      params: [_code, _email]
     }
   })
 }
 
 export function ActiveTrailVIP() {
   return request({
-    url: '/i',
+    url: '/m',
     method: 'post',
     dataType: 'json',
     data: {

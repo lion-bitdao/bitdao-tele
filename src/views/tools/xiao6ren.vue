@@ -6,14 +6,16 @@
         <div style="margin: 15px; text-align: center; justify-content: center; justify-items: center">
           <div style="text-align: left; justify-self: center; margin-left: 15px;text-indent: 2em;line-height: 1.8;" class="dialog_text">小六壬是中国传统占卜术中极具特色的一种预测方法，相传源于三国时期诸葛亮的"马前课"，常用于日常决策的快速占断。</div>
           <div style="text-align: left; justify-self: center; margin-top: 10px;margin-left: 15px;text-indent: 2em;line-height: 1.8;" class="dialog_text">请输入想问的事情，请使用‘确定’或者‘否定’的语句，而不是问‘是不是’、‘能不能’、‘会不会’、‘行不行’，这样选择性的话题。</div>
+
           <div style="text-align: left; justify-self: left; margin-top: 10px;margin-left: 15px;line-height: 1.8;" class="dialog_text">✅ 我明天出门需要带伞吗？</div>
           <div style="text-align: left; justify-self: left; margin-left: 15px;line-height: 1.8;" class="dialog_text">✅ 我明天出门可以不带伞吗？</div>
           <div style="text-align: left; justify-self: left; margin-left: 15px;line-height: 1.8;" class="dialog_text">❌ 我明天出门要不要带伞？</div>
           <div style="text-align: left; justify-self: left; margin-left: 15px;line-height: 1.8;" class="dialog_text">❌ 我明天出门可不可以不带伞？</div>
-          <div style="text-align: left; justify-self: left; margin-top: 10px;margin-left: 15px;line-height: 1.8;" class="dialog_text">请在下方输入框写下您想问的事情：</div>
+          <div style="text-align: left; justify-self: left; margin-top: 10px;margin-left: 15px;line-height: 1.8;" class="dialog_text"></div>
+
           <div class="dialog_white_panel" style="margin-top: 5px;">
             <div class="dialog_white_panel_child">
-              <input v-model="selectedValue" style="text-align: justify; width: inherit" type="text" class="input_normal" placeholder="请输入您想问的事情" />
+              <input v-model="selectedValue" style="text-align: justify; height: 50px; line-height: 50px; padding: 0 8px; width: inherit" type="text" class="input_normal" placeholder="请输入您想问的事情" />
             </div>
           </div>
           <div class="dialog_white_panel">

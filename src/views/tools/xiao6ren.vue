@@ -4,25 +4,21 @@
       <ReturnBar title="卜卦问事" :show-back="from !== undefined && from !== ''"></ReturnBar>
       <el-main class="dialog_white_body">
         <div style="margin: 15px; text-align: center; justify-content: center; justify-items: center">
-          <div style="text-align: center; justify-self: center; margin-left: 15px" class="dialog_text">请输入事项或选择快捷选项</div>
-          <div class="dialog_white_panel">
+          <div style="text-align: left; justify-self: center; margin-left: 15px;text-indent: 2em;line-height: 1.8;" class="dialog_text">小六壬是中国传统占卜术中极具特色的一种预测方法，相传源于三国时期诸葛亮的"马前课"，常用于日常决策的快速占断。</div>
+          <div style="text-align: left; justify-self: center; margin-top: 10px;margin-left: 15px;text-indent: 2em;line-height: 1.8;" class="dialog_text">请输入想问的事情，请使用‘确定’或者‘否定’的语句，而不是问‘是不是’、‘能不能’、‘会不会’、‘行不行’，这样选择性的话题。</div>
+          <div style="text-align: left; justify-self: left; margin-top: 10px;margin-left: 15px;line-height: 1.8;" class="dialog_text">✅ 我明天出门需要带伞吗？</div>
+          <div style="text-align: left; justify-self: left; margin-left: 15px;line-height: 1.8;" class="dialog_text">✅ 我明天出门可以不带伞吗？</div>
+          <div style="text-align: left; justify-self: left; margin-left: 15px;line-height: 1.8;" class="dialog_text">❌ 我明天出门要不要带伞？</div>
+          <div style="text-align: left; justify-self: left; margin-left: 15px;line-height: 1.8;" class="dialog_text">❌ 我明天出门可不可以不带伞？</div>
+          <div style="text-align: left; justify-self: left; margin-top: 10px;margin-left: 15px;line-height: 1.8;" class="dialog_text">请在下方输入框写下您想问的事情：</div>
+          <div class="dialog_white_panel" style="margin-top: 5px;">
             <div class="dialog_white_panel_child">
-              <div style="flex: 1; text-align: justify" class="dialog_text">输入事项</div>
+              <input v-model="selectedValue" style="text-align: justify; width: inherit" type="text" class="input_normal" placeholder="请输入您想问的事情" />
             </div>
           </div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <input v-model="selectedValue" style="text-align: justify; width: inherit" type="text" class="input_normal" placeholder="请输入事项" />
-            </div>
-          </div>
-          <div class="dialog_white_panel">
-            <div class="dialog_white_panel_child">
-              <DialogSelect :data-source="rowsData" :selected-items="selectedItems" :column="3" :column-space="4" :button-width="0" :multi-select="false" @on-select="onClickSelect" />
-            </div>
-          </div>
-          <div class="dialog_white_panel">
-            <div class="dialog_white_panel_child">
-              <input type="button" value="起卦" class="btn_brown" style="width: 100%" @click="onClickGetDivination" />
+              <input type="button" value=" 起卦 " class="btn_brown" style="width: 100%" @click="onClickGetDivination" />
             </div>
           </div>
         </div>
@@ -34,7 +30,6 @@
 </template>
 <script>
 /* eslint-disable no-undef */
-import DialogSelect from '../../components/DialogSelect'
 import { getDivination } from '../../api/fortune'
 import { setToken } from '../../utils/auth'
 import ReturnBar from '../../components/ReturnBar'
@@ -42,16 +37,11 @@ import { getPersonList } from '../../api/member'
 import ModalToast from '../../components/ModalToast'
 
 export default {
-  name: 'Divination',
-  components: { DialogSelect, ReturnBar, ModalToast },
+  name: 'Xiao6Ren',
+  components: { ReturnBar, ModalToast },
   data() {
     return {
       listLoading: false,
-      rowsData: [
-        { id: '寻物', text: '寻物' },
-        { id: '姻缘', text: '姻缘' },
-        { id: '合作', text: '合作' }
-      ],
       selectedItems: [],
       selectedValue: '',
       total: 0,

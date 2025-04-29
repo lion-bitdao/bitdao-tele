@@ -38,8 +38,8 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/dailyforcast',
-    component: () => import('@/views/user/dailyforcast'),
+    path: '/lunar',
+    component: () => import('@/views/user/lunar'),
     hidden: true
   },
   {
@@ -83,18 +83,18 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/divination',
-    component: () => import('@/views/divination/divination'),
+    path: '/xiao6ren',
+    component: () => import('@/views/tools/xiao6ren'),
     hidden: true
   },
   {
     path: '/luckynumber',
-    component: () => import('@/views/luckynumber/luckynumber'),
+    component: () => import('@/views/tools/luckynumber'),
     hidden: true
   },
   {
-    path: '/goodday',
-    component: () => import('@/views/goodday/goodday'),
+    path: '/pickdate',
+    component: () => import('@/views/tools/pickdate'),
     hidden: true
   },
   {

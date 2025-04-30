@@ -30,7 +30,7 @@ export function getGoodDate(_dvType, _date) {
     method: 'post',
     dataType: 'json',
     data: {
-      method: 'goodate',
+      method: 'pickdate',
       params: [_dvType, _date]
     }
   })
@@ -54,7 +54,7 @@ export function getDivination(_dvType) {
     method: 'post',
     dataType: 'json',
     data: {
-      method: 'divination',
+      method: 'xiao6ren',
       params: [_dvType]
     }
   })

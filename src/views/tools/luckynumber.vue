@@ -3,8 +3,8 @@
     <el-container class="dialog_white">
       <ReturnBar title="幸运数字" :show-back="from !== undefined && from !== ''"></ReturnBar>
       <el-main class="dialog_white_body">
-        <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
-          <div style="align: left; justify-self: left; margin-left: 15px" class="dialog_text">数字个数</div>
+        <div style="margin: 15px; text-align: center; justify-content: center; justify-items: center">
+          <div style="text-align: left; justify-self: center; margin-left: 15px;text-indent: 2em;line-height: 1.8;" class="dialog_text">我会使用神秘的算法，计算出您的幸运数字，请告诉我您所需要的数字个数和范围。</div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
               <DialogSelect :data-source="rowsData" :column="5" :column-space="4" :button-width="0" :multi-select="false" @on-select="selectingNum" />
@@ -12,19 +12,19 @@
           </div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <div style="flex: 1; text-align: justify" class="dialog_text">最小数字</div>
-              <div style="margin-left: 15px; flex: 1; text-align: justify" class="dialog_text">最大数字</div>
+              <div style="flex: 1; text-align: justify" class="dialog_text">最小数字（包含）</div>
+              <div style="margin-left: 15px; flex: 1; text-align: justify" class="dialog_text">最大数字（包含）</div>
+            </div>
+          </div>
+          <div class="dialog_white_panel" style="margin-top: 5px;">
+            <div class="dialog_white_panel_child">
+              <input v-model="min" style="text-align: center; width: inherit" type="number" class="input_normal" placeholder="请输入" />
+              <input v-model="max" style="margin-left: 15px; text-align: center; width: inherit" type="number" class="input_normal" placeholder="请输入" />
             </div>
           </div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <input v-model="min" style="text-align: right; width: inherit" type="number" class="input_normal" placeholder="请输入" />
-              <input v-model="max" style="margin-left: 15px; text-align: right; width: inherit" type="number" class="input_normal" placeholder="请输入" />
-            </div>
-          </div>
-          <div class="dialog_white_panel">
-            <div class="dialog_white_panel_child">
-              <input type="button" value="测算" class="btn_brown" style="width: 100%" @click="onClickGetDate" />
+              <input type="button" value="开始生成" class="btn_brown" style="width: 100%" @click="onClickGetDate" />
             </div>
           </div>
         </div>
@@ -48,8 +48,17 @@ export default {
   components: { DialogSelect, ReturnBar, ModalToast },
   data() {
     return {
-      listLoading: false,
-      rowsData: [],
+      rowsData: [
+        { id: 1, text: '1' },
+        { id: 2, text: '2' },
+        { id: 3, text: '3' },
+        { id: 4, text: '4' },
+        { id: 5, text: '5' },
+        { id: 6, text: '6' },
+        { id: 7, text: '7' },
+        { id: 8, text: '8' },
+        { id: 9, text: '9' }
+      ],
       total: 0,
       filter: {
         page: 0,
@@ -60,8 +69,8 @@ export default {
       token: this.$route.query.t,
       from: this.$route.query.f,
       seletedNums: [],
-      min: 0,
-      max: 999,
+      min: 1,
+      max: 99,
       toastContent: '',
       modalToastShow: false,
       toastContent2: '',
@@ -91,11 +100,6 @@ export default {
     initNums() {
       if (this.$route.query !== undefined && this.$route.query.t !== undefined) {
         setToken(this.$route.query.t)
-        this.rowsData = []
-        for (var i = 1; i <= 9; i++) {
-          this.rowsData.push({ id: i, text: `${i}` })
-        }
-
         getPersonList()
           .then((result) => {
             const _list = result.result

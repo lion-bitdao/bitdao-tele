@@ -12,7 +12,7 @@
 
           <div class="dialog_white_panel" style="margin-top: 5px;">
             <div class="dialog_white_panel_child">
-              <input v-model="selectedValue" style="text-align: justify; height: 50px; line-height: 50px; padding: 0 8px; width: inherit" type="text" class="input_normal" placeholder="请输入您想问的事情" />
+              <input v-model="selectedValue" style="text-align: justify; height: 50px; line-height: 32px; padding: 0 8px; width: inherit" type="text" class="input_normal" placeholder="请输入您想问的事情" />
             </div>
           </div>
           <div class="dialog_white_panel">

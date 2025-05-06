@@ -17,7 +17,7 @@
           </div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <input type="button" value=" 起卦 " class="btn_brown" style="width: 100%" @click="onClickGetDivination" />
+              <input type="button" value=" 起卦 " class="btn_brown" style="width: 100%" @click="onClickXiao6Ren" />
             </div>
           </div>
         </div>
@@ -29,10 +29,10 @@
 </template>
 <script>
 /* eslint-disable no-undef */
-import { getDivination } from '../../api/fortune'
+import { postXiao6Ren } from '../../api/fortune'
 import { setToken } from '../../utils/auth'
-import ReturnBar from '../../components/ReturnBar'
 import { getPersonList } from '../../api/member'
+import ReturnBar from '../../components/ReturnBar'
 import ModalToast from '../../components/ModalToast'
 
 export default {
@@ -81,8 +81,8 @@ export default {
           })
       }
     },
-    onClickGetDivination(e) {
-      getDivination(this.selectedValue)
+    onClickXiao6Ren(e) {
+      postXiao6Ren(this.selectedValue)
         .then((result) => {
           window.Telegram.WebApp.close()
         })

@@ -24,7 +24,7 @@
           </div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <input type="button" value="开始生成" class="btn_brown" style="width: 100%" @click="onClickGetDate" />
+              <input type="button" value="开始生成" class="btn_brown" style="width: 100%" @click="onClickLuckyNumber" />
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
 import DialogSelect from '../../components/DialogSelect'
 import ModalToast from '../../components/ModalToast'
 import ReturnBar from '../../components/ReturnBar'
-import { getLuckyNumber } from '../../api/fortune'
+import { postLuckyNumber } from '../../api/fortune'
 import { getPersonList } from '../../api/member'
 import { setToken } from '../../utils/auth'
 
@@ -114,7 +114,7 @@ export default {
           })
       }
     },
-    onClickGetDate(e) {
+    onClickLuckyNumber(e) {
       if (this.seletedNums.length === 0) {
         this.toastContent3 = '请选择数字个数'
         this.modalToastShow3 = true
@@ -130,7 +130,7 @@ export default {
         this.modalToastShow3 = true
         return
       }
-      getLuckyNumber(parseInt(this.seletedNums[0]), this.min, this.max)
+      postLuckyNumber(parseInt(this.seletedNums[0]), this.min, this.max)
         .then((result) => {
           window.Telegram.WebApp.close()
         })

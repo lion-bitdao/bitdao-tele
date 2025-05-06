@@ -28,7 +28,7 @@
           </div>
           <div class="dialog_white_panel">
             <div class="dialog_white_panel_child">
-              <input type="button" value="开始推算" class="btn_brown" style="width: 100%" @click="onClickPredict" />
+              <input type="button" value="开始推算" class="btn_brown" style="width: 100%" @click="onClickPickDate" />
             </div>
           </div>
         </div>
@@ -37,7 +37,10 @@
   </div>
 </template>
 <script>
+import { postPickDate } from '../../api/fortune'
+import { setToken } from '../../utils/auth'
 import ReturnBar from '../../components/ReturnBar'
+
 export default {
   name: 'PickDate',
   components: { ReturnBar },
@@ -45,14 +48,28 @@ export default {
     return {
       token: this.$route.query.t,
       from: this.$route.query.f,
-      seletedDate: ''
+      seletedDate: '',
+      selectedValue: ''
     }
   },
-  created() {},
+  created() {
+    this.init()
+  },
+  init() {
+    if (this.$route.query !== undefined && this.$route.query.t !== undefined) {
+      setToken(this.$route.query.t)
+    }
+  },
   methods: {
     onChoice(e) {},
-    onClickPredict(e) {
-      window.Telegram.WebApp.close()
+    onClickPickDate(e) {
+      postPickDate(this.selectedValue, this.seletedDate)
+        .then((result) => {
+          window.Telegram.WebApp.close()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     jumpTo(_page, _query) {
       var _jumpArg = { path: _page }

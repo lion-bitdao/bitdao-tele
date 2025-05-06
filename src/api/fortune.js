@@ -24,38 +24,38 @@ export function getFortuneHistory(_page, _size) {
   })
 }
 
-export function getGoodDate(_dvType, _date) {
+export function postPickDate(_matter, _date) {
   return request({
     url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
       method: 'pickdate',
-      params: [_dvType, _date]
+      params: [_matter, _date]
     }
   })
 }
 
-export function getLuckyNumber(_numCount, _min, _max) {
+export function postLuckyNumber(_num, _min, _max) {
   return request({
     url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
       method: 'luckynumber',
-      params: [_numCount, _min, _max]
+      params: [_num, _min, _max]
     }
   })
 }
 
-export function getDivination(_dvType) {
+export function postXiao6Ren(_matter) {
   return request({
     url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
       method: 'xiao6ren',
-      params: [_dvType]
+      params: [_matter]
     }
   })
 }

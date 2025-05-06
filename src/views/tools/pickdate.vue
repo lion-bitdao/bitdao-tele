@@ -55,12 +55,12 @@ export default {
   created() {
     this.init()
   },
-  init() {
-    if (this.$route.query !== undefined && this.$route.query.t !== undefined) {
-      setToken(this.$route.query.t)
-    }
-  },
   methods: {
+    init() {
+      if (this.$route.query !== undefined && this.$route.query.t !== undefined) {
+        setToken(this.$route.query.t)
+      }
+    },
     onChoice(e) {},
     onClickPickDate(e) {
       postPickDate(this.selectedValue, this.seletedDate)

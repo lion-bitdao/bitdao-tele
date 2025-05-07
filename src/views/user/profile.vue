@@ -3,7 +3,7 @@
     <div class="dialog_white">
       <div v-if="!loaded" class="dialog_white_body">登录已过期,请从telegram菜单重新进入此页面!</div>
       <div v-if="loaded" class="dialog_white_body">
-        <div style="margin: 15px; align: center; justify-content: center; justify-items: center">
+        <div style="margin: 15px; text-align: center; justify-content: center; justify-items: center">
           <div class="avatar_panel">
             <img src="../../assets/images/avatar.png" class="avatar" />
             <div class="avatar_name">{{ nickName }}</div>
@@ -23,7 +23,7 @@
             </div>
           </div>
           <div class="lunar_button">
-            <div class="avatar_attrib_panel_button" @click="jumpTo('/dailyforcast', { undefined })">
+            <div class="avatar_attrib_panel_button" @click="jumpTo('/lunar', { undefined })">
               <img src="../../assets/images/home_group2_rili@2x.png" class="type_button_icon_img" />
               <div style="margin-left: 10px">每日运势</div>
             </div>
@@ -33,11 +33,11 @@
               <div class="type_button_icon"><img src="../../assets/images/home_group3_num@2x.png" class="type_button_icon_img" /></div>
               <div class="avatar_attrib_item_text">幸运数字</div>
             </div>
-            <div class="type_button" style="margin-left: 15px" @click="jumpTo('/divination', undefined)">
+            <div class="type_button" style="margin-left: 15px" @click="jumpTo('/xiao6ren', undefined)">
               <div class="type_button_icon"><img src="../../assets/images/home_group3_div@2x.png" class="type_button_icon_img" /></div>
               <div class="avatar_attrib_item_text">卜卦问事</div>
             </div>
-            <div class="type_button" style="margin-left: 15px" @click="jumpTo('/goodday', undefined)">
+            <div class="type_button" style="margin-left: 15px" @click="jumpTo('/pickdate', undefined)">
               <div class="type_button_icon"><img src="../../assets/images/home_group3_days@2x.png" class="type_button_icon_img" /></div>
               <div class="avatar_attrib_item_text">吉日推算</div>
             </div>

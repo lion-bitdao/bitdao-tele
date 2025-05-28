@@ -1,18 +1,3 @@
-<template>
-  <div class="app-container">
-    <el-container class="dialog_white">
-      <ReturnBar title="每日运势" :show-back="from !== undefined && from !== ''"></ReturnBar>
-      <el-main class="dialog_white_body" style="margin-top: 5px; overflow-x: scroll">
-        <div style="font-size: 32px; color: #2a2a2a; letter-spacing: 0; line-height: 32px; text-align: left; margin-left: 20px">每日运势</div>
-        <div class="cnlunar">
-          <CnLunar :times="lunarTimes" :day="lunarDay" :date="date" :cnyear="cnyear" :cnmonth="cnmonth" :cnday="cnday" :good="good" :bad="bad"></CnLunar>
-        </div>
-        <div v-if="false" style="font-size: 24px; color: #bda06f; text-align: left; margin-top: 30px; margin-left: 20px">我的运势</div>
-        <div v-if="false" style="font-size: 15px; line-height: 30px; text-align: left; margin-left: 20px">在线排盘，采用最精确的排盘程序，包括八字排盘、六爻排盘、梅花易数排盘、紫微斗数排盘等。对於普通易经爱好者而言，最不容易理解的什么是「真太阳时」</div>
-      </el-main>
-    </el-container>
-  </div>
-</template>
 <style>
 .cnlunar {
   display: flex;
@@ -22,31 +7,161 @@
   justify-items: center;
   width: 100%;
 }
+.lunar_body {
+  border-style: solid;
+  border-width: thin;
+  border-color: black;
+  display: flex;
+  flex-direction: column;
+  width: 330px;
+  height: auto;
+}
+
+.lunar_date_parent {
+  justify-self: flex-start;
+  justify-content: flex-start;
+  justify-items: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  align-self: flex-start;
+  text-align: left;
+}
+.lunar_date_row {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-end;
+  justify-items: flex-end;
+  justify-self: flex-end;
+  width: 315px;
+  margin: 10px;
+}
+.lunar_date {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  width: fit-content;
+}
+.lunar_date_day {
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+.lunar_date_date {
+  font-size: 18px;
+  color: #2a2a2a;
+  letter-spacing: 0;
+}
+.lunar_date_year {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+}
+.lunar_date_year_text {
+  border-left-color: #d8d8d8;
+  border-left-style: solid;
+  border-left-width: thin;
+  writing-mode: vertical-rl;
+  width: 20px;
+}
+.lunar_time_text {
+  border-left-color: #d8d8d8;
+  border-left-style: solid;
+  border-left-width: thin;
+  writing-mode: vertical-rl;
+  font-size: 16px;
+  color: #2a2a2a;
+  letter-spacing: 0;
+  line-height: 20px;
+  margin: 2px;
+  padding-left: 1px;
+}
+
+.lunar_time {
+  display: flex;
+  flex-direction: column;
+}
+.lunar_time_icon_panel {
+  width: inherit;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+.lunar_time_icon {
+  width: 20px;
+  height: 20px;
+}
+.lunar_time_dot {
+  width: 20px;
+  height: 20px;
+}
 </style>
+
+<template>
+  <div class="app-container">
+    <el-container class="dialog_white">
+      <ReturnBar title="万年历" :show-back="from !== undefined && from !== ''"></ReturnBar>
+      <el-main class="dialog_white_body" style="margin-top: 10px; overflow-x: scroll">
+        <div style="font-size: 24px; color: #2a2a2a; letter-spacing: 0; line-height: 32px; text-align: left; margin-left: 20px">{{ solar }} <span style="font-size: 16px; color: #666666;">公历</span></div>
+        <div class="cnlunar">
+          <div class="lunar_body">
+            <div class="lunar_date_row">
+              <div class="lunar_date_year" style>
+                <div class="lunar_date_year_text">{{ ganzhiYear }}</div>
+                <div class="lunar_date_year_text">{{ ganzhiMonth }}</div>
+                <div class="lunar_date_year_text">{{ ganzhiDay }}</div>
+              </div>
+              <div class="lunar_date_parent" style="flex: auto">
+                <div class="lunar_date">
+                  <div class="lunar_date_day">{{ lunarYear }} <span style="font-size: 16px; color: #666666;">农历</span></div>
+                  <div class="lunar_date_date">{{ lunarMonth }} {{ lunarDay }}</div>
+                  <div class="lunar_date_date">{{ jieqi }} {{ jieqidays }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="lunar_date_row">
+              <div class="lunar_date_parent" style="font-size: 15px">{{ good }}</div>
+              <div style="font-size: 30px; margin-right: 10px" class="lunar_date_parent">宜</div>
+            </div>
+            <div class="lunar_date_row">
+              <div class="lunar_date_parent" style="font-size: 15px">{{ bad }}</div>
+              <div style="font-size: 30px; margin-right: 10px" class="lunar_date_parent">忌</div>
+            </div>
+            <div class="lunar_date_row">
+              <div class="lunar_date_year">
+                <div v-for="item in lunarTimes" :key="item.text" class="lunar_time">
+                  <div class="lunar_time_text">{{ item.text }}</div>
+                  <div class="lunar_time_icon_panel">
+                    <div v-if="item.good" class="lunar_time_icon"><img src="../../assets/images/calendar_ji@2x.png" class="lunar_time_icon" /></div>
+                    <div v-if="!item.good" class="lunar_time_icon"><img src="../../assets/images/calendar_xiong@2x.png" class="lunar_time_icon" /></div>
+                  </div>
+                  <div class="lunar_time_icon_panel">
+                    <div v-if="item.selected" class="lunar_time_dot"><img src="../../assets/images/calendar_now@2x.png" class="lunar_time_icon" /></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="lunar_date_row"></div>
+          </div>
+        </div>
+      </el-main>
+    </el-container>
+  </div>
+</template>
+
 <script>
 import ReturnBar from '../../components/ReturnBar'
-import CnLunar from '../../components/CnLunar'
-import { getDailyForcast } from '../../api/fortune'
+import { getCalender1 } from '../../api/fortune'
 import { getChineseTime } from '../../utils/chineselunar'
 import { setToken } from '../../utils/auth'
 export default {
-  name: 'DailyForcast',
-  components: { ReturnBar, CnLunar },
+  name: 'Lunar',
+  components: { ReturnBar },
+  date: '',
+  created() { this.init() },
   data() {
     return {
       listLoading: false,
-      rowsData: [
-        { id: 1, text: '男' },
-        { id: 2, text: '女' }
-      ],
-      relations: [
-        { id: 1, text: '父母' },
-        { id: 2, text: '子女' },
-        { id: 3, text: '配偶' },
-        { id: 4, text: '朋友' },
-        { id: 5, text: '搭档' },
-        { id: 6, text: '对手' }
-      ],
       total: 0,
       filter: {
         page: 0,
@@ -54,39 +169,46 @@ export default {
         status: 0,
         filter: ''
       },
-      value1: '',
-      value2: '',
-      lunarDay: '',
       date: '',
-      cnyear: '',
-      cnmonth: '',
-      cnday: '',
-      good: '',
-      bad: '',
+      solar: '',
+      lunarYear: '',
+      lunarMonth: '',
+      lunarDay: '',
+      ganzhiYear: '',
+      ganzhiMonth: '',
+      ganzhiDay: '',
+      jieqi: '',
+      jieqidays: '',
       lunarTimes: [],
       token: this.$route.query.t,
       from: this.$route.query.f
     }
   },
-  created() {
-    this.init()
-  },
   methods: {
     init() {
       var _date = new Date()
+      const year = _date.getFullYear()
+      const month = String(_date.getMonth() + 1).padStart(2, '0')
+      const day = String(_date.getDate()).padStart(2, '0')
+      this.date = `${year}-${month}-${day}`
+      
       if (this.$route.query !== undefined && this.$route.query.t !== undefined) {
         setToken(this.$route.query.t)
-        getDailyForcast()
+        getCalender1(this.date)
           .then((result) => {
             var _result = result.result
-            var _currentHour = getChineseTime(_date.getHours(), _date.getMinutes())
-            this.lunarDay = _result.luanr
-            this.date = _result.solar
-            this.cnyear = _result.ganzhi[0] + '年'
-            this.cnmonth = _result.ganzhi[1] + '月'
-            this.cnday = _result.ganzhi[2] + '日'
+            this.solar = _result.solar[0] + '年' + _result.solar[1] + '月' + _result.solar[2] + '日'
+            this.lunarYear = _result.lunar[0] + '年'
+            this.lunarMonth = _result.lunar[1] + '月'
+            this.lunarDay = _result.lunar[2] + ''
+            this.jieqi = _result.jieqi[0]
+            this.jieqidays = '第' + _result.jieqi[1] + '天'
+            this.ganzhiYear = _result.ganzhi[0] + '年'
+            this.ganzhiMonth = _result.ganzhi[1] + '月'
+            this.ganzhiDay = _result.ganzhi[2] + '日'
             this.good = _result.yi.join(' ')
             this.bad = _result.ji.join(' ')
+            var _currentHour = getChineseTime(_date.getHours(), _date.getMinutes())
             var times = []
             for (var i = 0; i < _result.hour.length; i++) {
               times.push({ text: _result.hour[i][0] + '时', good: _result.hour[i][2] === '吉', selected: i === _currentHour })

@@ -1,13 +1,14 @@
 import request from '@/utils/request'
 
-export function getDailyForcast() {
+export function getCalender1(_date) {
+  var _timezone = 0 - new Date().getTimezoneOffset() / 60
   return request({
     url: '/m',
     method: 'post',
     dataType: 'json',
     data: {
-      method: 'dailyforcast',
-      params: []
+      method: 'calender1',
+      params: [_date, _timezone]
     }
   })
 }

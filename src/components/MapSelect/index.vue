@@ -50,6 +50,7 @@ export default {
       map: null,
       marker: null,
       selectedLocation: null,
+      mapContainer: null,
       mapStyles: {
         streets: 'mapbox://styles/mapbox/streets-v11',
         satellite: 'mapbox://styles/mapbox/satellite-v9',

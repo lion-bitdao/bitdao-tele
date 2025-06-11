@@ -69,35 +69,39 @@ export default {
   },
   methods: {
     initMap() {
-      // 设置访问令牌
-      mapboxgl.accessToken = this.accessToken
+      try {
+        // 设置访问令牌
+        mapboxgl.accessToken = this.accessToken
 
-      // 初始化地图
-      this.map = new mapboxgl.Map({
-        container: this.$refs.mapContainer,
-        style: this.mapStyle,
-        center: this.initialCenter,
-        zoom: this.initialZoom
-      })
+        // 初始化地图
+        this.map = new mapboxgl.Map({
+          container: this.$refs.mapContainer,
+          style: this.mapStyle,
+          center: this.initialCenter,
+          zoom: this.initialZoom
+        })
 
-      // 添加导航控件
-      this.map.addControl(new mapboxgl.NavigationControl(), 'top-right')
+        // 添加导航控件
+        this.map.addControl(new mapboxgl.NavigationControl(), 'top-right')
 
-      // 添加比例尺
-      this.map.addControl(new mapboxgl.ScaleControl())
+        // 添加比例尺
+        this.map.addControl(new mapboxgl.ScaleControl())
 
-      // 地图加载完成后添加点击事件
-      this.map.on('load', () => {
-        // 添加点击事件监听器
-        this.map.on('click', (e) => {
-          this.addMarker(e.lngLat)
-          this.selectedLocation = e.lngLat
-          this.$emit('coordinates-selected', {
-            lat: e.lngLat.lat,
-            lng: e.lngLat.lng
+        // 地图加载完成后添加点击事件
+        this.map.on('load', () => {
+          // 添加点击事件监听器
+          this.map.on('click', (e) => {
+            this.addMarker(e.lngLat)
+            this.selectedLocation = e.lngLat
+            this.$emit('coordinates-selected', {
+              lat: e.lngLat.lat,
+              lng: e.lngLat.lng
+            })
           })
         })
-      })
+      } catch (e) {
+        console.log(e)
+      }
     },
 
     addMarker(lngLat) {

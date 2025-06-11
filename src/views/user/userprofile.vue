@@ -14,6 +14,7 @@
                   <div>生日:{{ item.bazi_y }}年 {{ item.bazi_m }} {{ item.bazi_d }} {{ item.bazi_h }}</div>
                   <div>{{ item.lunar_time }}</div>
                   <div>关系:{{ getRelation(item.type) }}</div>
+                  <div>时区:{{ getRelation(item.type) }}</div>
                 </div>
                 <div class="userprofile_hrefs">
                   <div class="userprofile_item_href" @click="onClickEdit(item.id)">修改</div>
@@ -41,6 +42,7 @@ import ModalToast from '../../components/ModalToast'
 import ReturnBar from '../../components/ReturnBar'
 import { getRelation, getGender } from '../../utils/enums'
 import { getPersonList, personRemove } from '../../api/member'
+import moment from 'moment'
 export default {
   name: 'UserProfile',
   components: { ModalDialog, ModalToast, ReturnBar },
@@ -61,7 +63,8 @@ export default {
       deleteId: 0,
       toastContent: '删除成功',
       token: this.$route.query.t,
-      tid: this.$route.query.tid
+      tid: this.$route.query.tid,
+      timezones: []
     }
   },
   created() {
@@ -70,6 +73,16 @@ export default {
   methods: {
     getGender,
     getRelation,
+    initTimeZone() {
+      this.timezones = moment.tz.names().map((zone) => {
+        const offset = moment.tz(zone).format('Z')
+        return {
+          country: zone.split('/')[0], // 简化的国家提取（需优化）
+          region: zone,
+          timezone: `UTC${offset}`
+        }
+      })
+    },
     init() {
       getPersonList()
         .then((result) => {

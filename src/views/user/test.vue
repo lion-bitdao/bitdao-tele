@@ -1,13 +1,13 @@
 <template>
-  <div class="app-container" style="height: fit-content">
-    <ModalToast v-if="modalToastShow" :content="toastContent"></ModalToast>
+  <div>
+    <MapSelect access-token="pk.eyJ1IjoibGlvbnpob3UiLCJhIjoiY21icnA5NDJ5MGJrbDJsc2RodDA3a3p0NyJ9.8Udqh2C-SDdfhz-ChhlYQw"></MapSelect>
   </div>
 </template>
 <script>
-import ModalToast from '../../components/ModalToast'
+import MapSelect from '../../components/MapSelect'
 export default {
   name: 'UserProfile',
-  components: { ModalToast },
+  components: { MapSelect },
   data() {
     return {
       listLoading: false,
@@ -28,13 +28,8 @@ export default {
       tid: this.$route.query.tid
     }
   },
-  created() {
-    this.init()
-  },
+  created() {},
   methods: {
-    onModalDlgCanceled(e) {
-      this.modalDlgShow = false
-    },
     jumpTo(_page, _query) {
       var _jumpArg = { path: _page }
       if (_query !== undefined) {

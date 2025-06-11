@@ -1,22 +1,7 @@
 <template>
   <div class="mapbox-coordinate-picker">
+    <div ref="geocoderContainer" class="geocoder-container"></div>
     <div ref="mapContainer" class="map-container"></div>
-
-    <div class="controls-overlay">
-      <div class="map-control-btn" title="街道视图" @click="setMapStyle('streets')">
-        <i class="fas fa-road"></i>
-      </div>
-      <div class="map-control-btn" title="卫星视图" @click="setMapStyle('satellite')">
-        <i class="fas fa-satellite"></i>
-      </div>
-      <div class="map-control-btn" title="户外视图" @click="setMapStyle('outdoors')">
-        <i class="fas fa-tree"></i>
-      </div>
-      <div class="map-control-btn" title="暗黑模式" @click="setMapStyle('dark')">
-        <i class="fas fa-moon"></i>
-      </div>
-    </div>
-
     <div v-if="selectedLocation" class="location-info">
       <div>经度: {{ selectedLocation.lng.toFixed(6) }}</div>
       <div>纬度: {{ selectedLocation.lat.toFixed(6) }}</div>
@@ -25,6 +10,9 @@
 </template>
 <script>
 import mapboxgl from 'mapbox-gl'
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+
 export default {
   name: 'MapSelect',
   props: {
@@ -34,7 +22,7 @@ export default {
     },
     initialCenter: {
       type: Array,
-      default: () => [0, 0]
+      default: () => [116.4074, 39.9042]
     },
     initialZoom: {
       type: Number,
@@ -42,7 +30,7 @@ export default {
     },
     mapStyle: {
       type: String,
-      default: 'mapbox://styles/mapbox/streets-v11'
+      default: 'mapbox://styles/mapbox/standard'
     }
   },
   data() {
@@ -50,7 +38,6 @@ export default {
       map: null,
       marker: null,
       selectedLocation: null,
-      mapContainer: null,
       mapStyles: {
         streets: 'mapbox://styles/mapbox/streets-v11',
         satellite: 'mapbox://styles/mapbox/satellite-v9',
@@ -72,7 +59,6 @@ export default {
       try {
         // 设置访问令牌
         mapboxgl.accessToken = this.accessToken
-
         // 初始化地图
         this.map = new mapboxgl.Map({
           container: this.$refs.mapContainer,
@@ -81,15 +67,21 @@ export default {
           zoom: this.initialZoom
         })
 
-        // 添加导航控件
-        this.map.addControl(new mapboxgl.NavigationControl(), 'top-right')
+        this.map.on('style.load', () => {
+          this.map.setConfigProperty('basemap', 'lightPreset', 'day')
+        })
+        this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
 
         // 添加比例尺
         this.map.addControl(new mapboxgl.ScaleControl())
-
         // 地图加载完成后添加点击事件
         this.map.on('load', () => {
-          // 添加点击事件监听器
+          const geocoder = new MapboxGeocoder({
+            accessToken: this.accessToken,
+            mapboxgl: mapboxgl
+          })
+          this.map.addControl(geocoder, 'top-left')
+
           this.map.on('click', (e) => {
             this.addMarker(e.lngLat)
             this.selectedLocation = e.lngLat
@@ -137,3 +129,24 @@ export default {
   }
 }
 </script>
+<style>
+.searchbox {
+  width: 50%;
+  z-index: 100;
+}
+.map-container {
+  flex: 1;
+  min-width: 400px;
+  height: 500px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 1;
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 100%;
+}
+</style>

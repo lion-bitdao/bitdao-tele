@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 800px; height: 800px">
     <MapSelect access-token="pk.eyJ1IjoibGlvbnpob3UiLCJhIjoiY21icnA5NDJ5MGJrbDJsc2RodDA3a3p0NyJ9.8Udqh2C-SDdfhz-ChhlYQw"></MapSelect>
   </div>
 </template>
@@ -22,10 +22,7 @@ export default {
       modalDlgShow: false,
       modalDlgText: '',
       modalToastShow: false,
-      deleteId: 0,
-      toastContent: '删除成功',
-      token: this.$route.query.t,
-      tid: this.$route.query.tid
+      deleteId: 0
     }
   },
   created() {},
